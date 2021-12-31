@@ -1,11 +1,12 @@
-import {RepositoryInterface} from "./repository.interface";
-import {EntityInterface} from "./entity.interface";
+import { RepositoryInterface } from './repository.interface';
+import { EntityInterface } from './entity.interface';
 
 export interface DataProviderInterface {
-    connect(): Promise<void>;
-    disconnect(): Promise<void>;
+  connect(): Promise<void>;
 
-    getRepository<TEntity extends EntityInterface>(
-        entity: (new () => TEntity),
-    ): RepositoryInterface<TEntity>;
+  disconnect(): Promise<void>;
+
+  getRepository<TEntity extends EntityInterface>(
+    entity: new () => TEntity
+  ): RepositoryInterface<TEntity>;
 }

@@ -1,32 +1,35 @@
-import {DataProviderInterface} from "../interfaces/dataProvider.interface";
-import {RepositoryInterface} from "../interfaces/repository.interface";
+import { DataProviderInterface } from '../interfaces/dataProvider.interface';
+import { RepositoryInterface } from '../interfaces/repository.interface';
+import { EntityInterface } from '../interfaces/entity.interface';
 
-class MockRepository<TEntity> implements RepositoryInterface<TEntity> {
-    async findAll(): Promise<TEntity[]> {
-        // @ts-ignore
-        return [{id: 'sdasd'}];
-    }
+class MockRepository<TEntity extends EntityInterface>
+  implements RepositoryInterface<TEntity>
+{
+  async findAll(): Promise<TEntity[]> {
+    return [];
+  }
 
-    async findOne(): Promise<TEntity> {
-        throw Error('Not implemented');
-    }
+  async findOne(): Promise<TEntity> {
+    throw Error('Not implemented');
+  }
 
-    delete(id: string): Promise<void> {
-        return Promise.resolve(undefined);
-    }
+  async delete(): Promise<void> {
+    throw Error('Not implemented');
+  }
 }
 
 export class MockDataProvider implements DataProviderInterface {
-    async connect(): Promise<void> {
-        // TODO: nothing to do
-    }
+  async connect(): Promise<void> {
+    // TODO: nothing to do
+  }
 
-    async disconnect(): Promise<void> {
-        // TODO: nothing to do
-    }
+  async disconnect(): Promise<void> {
+    // TODO: nothing to do
+  }
 
-    getRepository<TEntity>(): RepositoryInterface<TEntity> {
-        return new MockRepository();
-    }
-
+  getRepository<
+    TEntity extends EntityInterface
+  >(): RepositoryInterface<TEntity> {
+    return new MockRepository();
+  }
 }
