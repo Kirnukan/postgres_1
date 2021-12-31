@@ -1,5 +1,5 @@
 export interface EntityInterface {
-    id: string;
+  id: string;
 
-    readonly entityName: string;
+  readonly entityName: string;
 }
