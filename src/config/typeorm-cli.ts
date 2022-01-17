@@ -1,4 +1,4 @@
-import {getOrmConfig} from './typeorm';
+import { getOrmConfig } from './typeorm';
 
 export default [{
     name: 'migrations:generate',
