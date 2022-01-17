@@ -22,12 +22,12 @@ export class ConfigService {
     }
 
     private static getRequiredEnv(name: string): string {
-        const variable = env[name];
+        const envName = env[name];
 
-        if (!variable) {
+        if (!envName) {
             throw new Error(`Variable ${name} is not set`);
         }
 
-        return variable.toString();
+        return envName.toString();
     }
 }
