@@ -6,6 +6,8 @@
     "migration:revert": "npm run typeorm:cli -- migration:revert -c migrations:create-run-revert"
   },
   "dependencies": {
+    "@types/express": "^4.17.13",
+    "express": "^4.17.2",
     "pg": "^8.7.1",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.41",

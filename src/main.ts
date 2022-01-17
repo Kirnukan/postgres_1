@@ -1,14 +1,14 @@
 import 'reflect-metadata';
 import { createConnection } from 'typeorm';
 import { getOrmConfig } from './config/typeorm';
-import { ProductEntity } from './entities/product.entity';
+import { ProductsEntity } from './entities/products.entity';
 
 async function main() {
     const connection = await createConnection(getOrmConfig());
     await connection.runMigrations();
 
 
-    const productRepository = connection.getRepository(ProductEntity);
+    const productRepository = connection.getRepository(ProductsEntity);
 
     await productRepository.save({
         name: 'New product from code',

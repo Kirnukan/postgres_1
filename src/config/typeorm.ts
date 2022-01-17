@@ -1,6 +1,6 @@
-import {PostgresConnectionOptions} from 'typeorm/driver/postgres/PostgresConnectionOptions';
-import {SnakeNamingStrategy} from 'typeorm-naming-strategies';
-import {ConfigService} from '../services/config.service';
+import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+import { ConfigService } from '../services/config.service';
 
 export function getOrmConfig(): PostgresConnectionOptions {
     const config = new ConfigService();
