@@ -6,31 +6,6 @@ import {
   import { configService } from './services/config.service';
   import express from 'express';
   import http from 'http';
-  import { OrderController } from './controllers/order.controller';
-  import { ProductController } from './controllers/product.controller';
-  import { OrderService } from './services/order.service';
-  import { ProductService } from './services/product.service';
-import { AttachmentService } from './services/attachment.service';
-import { CartService } from './services/cart.service';
-import { BrandService } from './services/brand.service';
-import { CategoryService } from './services/category.service';
-import { PropertyService } from './services/property.service';
-import { ProductPropertiesService } from './services/productProperties.service';
-import { ProductImagesService } from './services/productImages.service';
-import { PaymentService } from './services/payment.service';
-import { CustomerService } from './services/customer.service';
-import { CurrencyService } from './services/currency.service';
-import { CartController } from './controllers/cart.controller';
-import { BrandController } from './controllers/brand.controller';
-import { CategoryController } from './controllers/category.controller';
-import { AttachmentController } from './controllers/attachment.controller';
-import { PropertyController } from './controllers/property.controller';
-import { ProductImagesController } from './controllers/productImages.controller';
-import { ProductPropertiesController } from './controllers/productProperties.controller';
-import { PaymentController } from './controllers/payment.controller';
-import { CustomerController } from './controllers/customer.controller';
-import { CurrencyController } from './controllers/currency.controller';
-import { PostgresDataProvider } from './providers/postgresDataProvider';
 
   export class ExpressServer implements ListenerInterface {
     private readonly app;
@@ -88,45 +63,76 @@ import { PostgresDataProvider } from './providers/postgresDataProvider';
     }
   }
 
-  export async function router(serviceProvider: PostgresDataProvider) {
+  export async function router() {
     const server = new ExpressServer(configService.port);
-    const services = {
-        cartsService: new CartService(serviceProvider),
-        brandsService: new BrandService(serviceProvider),
-        ordersService: new OrderService(serviceProvider),
-        categoriesService: new CategoryService(serviceProvider),
-        attachmentsService: new AttachmentService(serviceProvider),
-        propertiesService: new PropertyService(serviceProvider),
-        productsService: new ProductService(serviceProvider),
-        productsPropertiesService: new ProductPropertiesService(serviceProvider),
-        productsImagesService: new ProductImagesService(serviceProvider),
-        paymentsService: new PaymentService(serviceProvider),
-        customersService: new CustomerService(serviceProvider),
-        currenciesService: new CurrencyService(serviceProvider),
-    };
-    const controllers = {
-        cartsController: new CartController(services.cartsService),
-        brandsController: new BrandController(services.brandsService),
-        ordersController: new OrderController(services.ordersService),
-        categoriesController: new CategoryController(services.categoriesService),
-        attachmentsController: new AttachmentController(services.attachmentsService),
-        propertiesController: new PropertyController(services.propertiesService),
-        productsController: new ProductController(services.productsService),
-        productsPropertiesController: new ProductPropertiesController(services.productsPropertiesService),
-        productsImagesController: new ProductImagesController(services.productsImagesService),
-        paymentsController: new PaymentController(services.paymentsService),
-        customersController: new CustomerController(services.customersService),
-        currenciesController: new CurrencyController(services.currenciesService),
-    };
-  
-    // server.addHandler(
-    //   EMethod.GET,
-    //   '/orders/:id',
-    //   async (req) =>
-    //     await orderController.getById(req));
-
-
+    server.addHandler(
+        EMethod.GET,
+        '/orders/:id',
+        async (req) =>
+          await orderControllerInstance.getOrderById(req).catch((err) => err)
+      );
+      server.addHandler(
+        EMethod.GET,
+        '/orders',
+        async () => await orderControllerInstance.getOrders().catch((err) => err)
+      );
+    
+      server.addHandler(
+        EMethod.DELETE,
+        '/orders/:id',
+        async (req) =>
+          await orderControllerInstance.deleteOrder(req).catch((err) => err)
+      );
+    
+      server.addHandler(
+        EMethod.GET,
+        '/products/:id',
+        async (req) =>
+          await productControllerInstance.getProductById(req)
+      );
+      server.addHandler(
+        EMethod.GET,
+        '/products',
+        async () =>
+          await productControllerInstance.getProducts()
+      );
+      server.addHandler(
+        EMethod.DELETE,
+        '/products/:id',
+        async (req) =>
+          await productControllerInstance.deleteProduct(req)
+      );
     await server.start();
     console.log('Server started...');
   }
+    // const services = {
+    //     cartsService: new CartService(),
+    //     brandsService: new BrandService(),
+    //     ordersService: new OrderService(),
+    //     categoriesService: new CategoryService(),
+    //     attachmentsService: new AttachmentService(),
+    //     propertiesService: new PropertyService(),
+    //     productsService: new ProductService(),
+    //     productsPropertiesService: new ProductPropertiesService(),
+    //     productsImagesService: new ProductImagesService(),
+    //     paymentsService: new PaymentService(),
+    //     customersService: new CustomerService(),
+    //     currenciesService: new CurrencyService(),
+    // };
+    // const controllers = {
+    //     cartsController: new CartController(services.cartsService),
+    //     brandsController: new BrandController(services.brandsService),
+    //     ordersController: new OrderController(services.ordersService),
+    //     categoriesController: new CategoryController(services.categoriesService),
+    //     attachmentsController: new AttachmentController(services.attachmentsService),
+    //     propertiesController: new PropertyController(services.propertiesService),
+    //     productsController: new ProductController(services.productsService),
+    //     productsPropertiesController: new ProductPropertiesController(services.productsPropertiesService),
+    //     productsImagesController: new ProductImagesController(services.productsImagesService),
+    //     paymentsController: new PaymentController(services.paymentsService),
+    //     customersController: new CustomerController(services.customersService),
+    //     currenciesController: new CurrencyController(services.currenciesService),
+    // };
+  
+
   

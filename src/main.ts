@@ -2,23 +2,35 @@ import 'reflect-metadata';
 import { createConnection } from 'typeorm';
 import { getOrmConfig } from './config/typeorm';
 import { ProductsEntity } from './entities/products.entity';
-import { dataProviderFactory } from './providers/dataProvider.factory';
+import { PostgresDataProvider } from './providers/postgresDataProvider';
+import { EntitiesRepository } from './repositories/entities.repository';
 import { router } from './server';
 
 async function main() {
-    const PostgresProvider = dataProviderFactory();
-    router(PostgresProvider)
     const connection = await createConnection(getOrmConfig());
+    const entitiesRepository = new EntitiesRepository(connection)
     await connection.runMigrations();
+    const productRepository = entitiesRepository.productsRepository;
+    const orderRepository = entitiesRepository.ordersRepository;
+    const attachmentRepository = entitiesRepository.attachmentRepository;
+    const brandRepository = entitiesRepository.brandsRepository;
+    const cartRepository = entitiesRepository.cartsRepository;
+    const categoryRepository = entitiesRepository.categoriesRepository;
+    const currencyRepository = entitiesRepository.currenciesRepository;
+    const customerRepository = entitiesRepository.customersRepository;
+    const paymentRepository = entitiesRepository.paymentsRepository;
+    const productImagesRepository = entitiesRepository.productsImagesRepository;
+    const productPropertiesRepository = entitiesRepository.productsPropertiesRepository;
+    const propertyRepository = entitiesRepository.propertiesRepository;
 
-    const productsRepository = connection.getRepository(ProductsEntity);
 
-    await productsRepository.save({
+
+    await productRepository.save({
         name: 'New product from code',
         availableAmount: 100,
     });
 
-    const [items, count] = await productsRepository.findAndCount({
+    const [items, count] = await productRepository.findAndCount({
         skip: 10,
         take: 20
     });

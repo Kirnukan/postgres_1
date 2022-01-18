@@ -1,6 +1,20 @@
  import { Column, Entity, OneToOne } from 'typeorm';
 import { CustomersEntity } from './customers.entity';
 import { BaseClass } from './BaseClass';
+import {
+  validate,
+  validateOrReject,
+  Contains,
+  IsInt,
+  Length,
+  IsEmail,
+  IsFQDN,
+  IsDate,
+  Min,
+  Max,
+  isDate,
+} from 'class-validator';
+
 
 
 export enum orderStatus {
@@ -12,6 +26,7 @@ export enum orderStatus {
 @Entity('orders')
 export class OrdersEntity extends BaseClass   {
   @OneToOne(() => CustomersEntity)
+  @IsInt()
   @Column({
     type: 'numeric',
     nullable: false
@@ -24,12 +39,14 @@ export class OrdersEntity extends BaseClass   {
   })  
   status!: orderStatus;
   
+  @IsDate()
   @Column({
     type: 'timestamp',
     nullable: false
   })  
   created_at!: string;
   
+  @IsDate()
   @Column({
     type: 'timestamp',
     nullable: false

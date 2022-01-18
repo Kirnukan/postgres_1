@@ -1,5 +1,18 @@
 import { Column, Entity } from 'typeorm';
 import { BaseClass } from './BaseClass';
+import {
+  validate,
+  validateOrReject,
+  Contains,
+  IsInt,
+  Length,
+  IsEmail,
+  IsFQDN,
+  IsDate,
+  Min,
+  Max,
+} from 'class-validator';
+
 
 
 export enum propType {
@@ -11,6 +24,7 @@ export enum propType {
 
 @Entity('properties')
 export class PropertiesEntity extends BaseClass   {
+  @Length(1, 124)
   @Column({
     type: 'varchar',
     nullable: false
