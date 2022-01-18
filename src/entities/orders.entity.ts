@@ -1,5 +1,6 @@
- import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+ import { Column, Entity, OneToOne } from 'typeorm';
 import { CustomersEntity } from './customers.entity';
+import { BaseClass } from './BaseClass';
 
 
 export enum orderStatus {
@@ -9,10 +10,7 @@ export enum orderStatus {
 }
 
 @Entity('orders')
-export class OrdersEntity     {
-  @PrimaryGeneratedColumn()
-  id!: number;
-    
+export class OrdersEntity extends BaseClass   {
   @OneToOne(() => CustomersEntity)
   @Column({
     type: 'numeric',
@@ -37,4 +35,6 @@ export class OrdersEntity     {
     nullable: false
   })  
   updated_at!: string;
+
+  entityName: string = 'orders';
 }

@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity } from 'typeorm';
+import { BaseClass } from './BaseClass';
 
 
 export enum propType {
@@ -8,11 +9,8 @@ export enum propType {
   COLOR = 'COLOR'
 }
 
-@Entity('products')
-export class PropertiesEntity     {
-  @PrimaryGeneratedColumn()
-  id!: number;
-
+@Entity('properties')
+export class PropertiesEntity extends BaseClass   {
   @Column({
     type: 'varchar',
     nullable: false
@@ -24,4 +22,6 @@ export class PropertiesEntity     {
     nullable: false
   })  
   type!: propType;
+
+  entityName: string = 'properties';
 }

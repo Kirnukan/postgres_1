@@ -1,13 +1,11 @@
- import { Column, Entity, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
+ import { Column, Entity, OneToOne } from 'typeorm';
 import { BrandsEntity } from './brands.entity';
 import { CategoriesEntity } from './categories.entity';
 import { CurrenciesEntity } from './currencies.entity';
+import { BaseClass } from './BaseClass';
 
 @Entity('products')
-export class ProductsEntity {
-  @PrimaryGeneratedColumn()
-  id!: number; 
-
+export class ProductsEntity extends BaseClass{
   @Column({
       type: 'varchar',
       nullable: false
@@ -60,4 +58,5 @@ export class ProductsEntity {
   })
   brand_id?: number;
 
+  entityName: string = 'products';
 }

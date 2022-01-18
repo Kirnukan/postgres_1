@@ -1,10 +1,8 @@
- import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+ import { Column, Entity } from 'typeorm';
+ import { BaseClass } from './BaseClass';
 
 @Entity('customers')
-export class CustomersEntity     {
-  @PrimaryGeneratedColumn()
-  id!: number;
-  
+export class CustomersEntity extends BaseClass   {
   @Column({
     type: 'varchar',
     nullable: false
@@ -28,4 +26,6 @@ export class CustomersEntity     {
     nullable: false
   })  
   last_name!: string;
+
+  entityName: string = 'customers';
 }

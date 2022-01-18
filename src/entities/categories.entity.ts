@@ -1,11 +1,9 @@
  import { Column, Entity, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
 import { ProductsEntity } from './products.entity';
+import { BaseClass } from './BaseClass';
 
 @Entity('categories')
-export class CategoriesEntity     {
-  @PrimaryGeneratedColumn()
-  id!: number;
-
+export class CategoriesEntity extends BaseClass   {
   @Column({
     type: 'varchar',
     nullable: false
@@ -24,4 +22,6 @@ export class CategoriesEntity     {
     nullable: true
   })  
   parent_category_id?: number;
+
+  entityName: string = 'categories';
 }

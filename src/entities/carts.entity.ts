@@ -1,12 +1,10 @@
- import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+ import { Column, Entity, OneToOne } from 'typeorm';
 import { OrdersEntity } from './orders.entity';
 import { ProductsEntity } from './products.entity';
+import { BaseClass } from './BaseClass';
 
 @Entity('carts')
-export class CartsEntity     {
-  @PrimaryGeneratedColumn()
-  id!: number;
-  
+export class CartsEntity extends BaseClass   {
   @OneToOne(() => OrdersEntity)
   @Column({
     type: 'numeric',
@@ -26,4 +24,6 @@ export class CartsEntity     {
     nullable: false
   })  
   amount!: number;
+
+  entityName: string = 'carts';
 }

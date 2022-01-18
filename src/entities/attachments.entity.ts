@@ -1,10 +1,8 @@
  import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseClass } from './BaseClass';
 
 @Entity('attachments')
-export class AttachmentsEntity {
-  @PrimaryGeneratedColumn()
-  id!: number;
-  
+export class AttachmentsEntity extends BaseClass{
   @Column({
     type: 'varchar',
     nullable: false
@@ -16,4 +14,6 @@ export class AttachmentsEntity {
     nullable: false
   })  
   file_path!: string;
+
+  entityName: string = 'attachments';
 }

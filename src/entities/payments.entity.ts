@@ -1,11 +1,9 @@
- import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+ import { Column, Entity, OneToOne } from 'typeorm';
 import { OrdersEntity } from './orders.entity';
+import { BaseClass } from './BaseClass';
 
 @Entity('payments')
-export class PaymentsEntity     {
-  @PrimaryGeneratedColumn()
-  id!: number;
-  
+export class PaymentsEntity extends BaseClass   {
   @OneToOne(() => OrdersEntity)
   @Column({
     type: 'numeric',
@@ -18,4 +16,6 @@ export class PaymentsEntity     {
     nullable: false
   })  
   kind!: string;
+
+  entityName: string = 'payments';
 }

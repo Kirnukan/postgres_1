@@ -1,11 +1,9 @@
- import { Column, Entity, PrimaryGeneratedColumn, ManyToOne} from 'typeorm';
+ import { Column, Entity, ManyToOne} from 'typeorm';
  import { AttachmentsEntity } from './attachments.entity';
+ import { BaseClass } from './BaseClass';
 
 @Entity('product_images')
-export class ProductImagesEntity     {
-  @PrimaryGeneratedColumn()
-  id!: number;
-
+export class ProductImagesEntity extends BaseClass   {
   @ManyToOne(() => AttachmentsEntity)
   @Column({
     type: 'numeric',
@@ -25,4 +23,6 @@ export class ProductImagesEntity     {
     nullable: false
   })  
   range!: number;
+
+  entityName: string = 'product_images';
 }
