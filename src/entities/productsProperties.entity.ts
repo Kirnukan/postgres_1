@@ -3,8 +3,8 @@ import { ProductsEntity } from './products.entity';
 import { PropertiesEntity } from './properties.entity';
 import { BaseClass } from './BaseClass';
 
-@Entity('product_properties')
-export class ProductPropertiesEntity extends BaseClass   {
+@Entity('products_properties')
+export class ProductsPropertiesEntity extends BaseClass   {
   @OneToOne(() => ProductsEntity)
   @Column({
     type: 'numeric',
@@ -24,5 +24,5 @@ export class ProductPropertiesEntity extends BaseClass   {
   })  
   value!: number;
 
-  entityName: string = 'product_properties';
+  entityName: string = 'products_properties';
 }

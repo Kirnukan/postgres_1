@@ -21,6 +21,10 @@ export class ConfigService {
         return ConfigService.getRequiredEnv('DB_PASSWORD');
     }
 
+    get port() {
+        return +ConfigService.getRequiredEnv('port');
+    }
+
     private static getRequiredEnv(name: string): string {
         const envName = env[name];
 
@@ -31,3 +35,5 @@ export class ConfigService {
         return envName.toString();
     }
 }
+
+export const configService = new ConfigService();

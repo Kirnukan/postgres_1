@@ -2,8 +2,8 @@
  import { AttachmentsEntity } from './attachments.entity';
  import { BaseClass } from './BaseClass';
 
-@Entity('product_images')
-export class ProductImagesEntity extends BaseClass   {
+@Entity('products_images')
+export class ProductsImagesEntity extends BaseClass   {
   @ManyToOne(() => AttachmentsEntity)
   @Column({
     type: 'numeric',
@@ -24,5 +24,5 @@ export class ProductImagesEntity extends BaseClass   {
   })  
   range!: number;
 
-  entityName: string = 'product_images';
+  entityName: string = 'products_images';
 }
