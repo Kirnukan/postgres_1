@@ -33,6 +33,7 @@ export class PropertiesEntity extends BaseClass   {
 
   @Column({
     type: 'enum',
+    enum: 'propType',
     nullable: false
   })  
   type!: propType;

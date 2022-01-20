@@ -35,6 +35,7 @@ export class OrdersEntity extends BaseClass   {
   
   @Column({
     type: 'enum',
+    enum: 'orderStatus',
     nullable: false
   })  
   status!: orderStatus;
