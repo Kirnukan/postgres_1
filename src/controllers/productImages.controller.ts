@@ -1,19 +1,14 @@
-import { ProductsImagesEntity } from 'src/entities/productsImages.entity';
-import { RequestInterface } from '../interfaces/request.interface';
-import { ProductImagesService } from 'src/services/productImages.service';
+import { ProductsImagesEntity } from '../entities/productsImages.entity';
+import { getRepository } from 'typeorm';
+import { Request, Response, NextFunction } from 'express';
+
 
 export class ProductImagesController {
-  constructor(private readonly productImagesService: ProductImagesService) {}
-  async getById(req: RequestInterface): Promise<ProductsImagesEntity> {
-    return await this.productImagesService.getOne(req.params.id);
+  private productImagesRepository = getRepository(ProductsImagesEntity);
+  async getById(req: Request, res: Response, next: NextFunction)  {
+    return await this.productImagesRepository.findOne(req.params.id)
   }
-  async getAll(): Promise<ProductsImagesEntity[]> {
-    return await this.productImagesService.getAll();
-  }
-  async deleteById(req: RequestInterface): Promise<void> {
-    return await this.productImagesService.deleteOne(req.params.id);
-  }
-  async createByProperties(req: {}): Promise<void> {    
-    return this.productImagesService.createOne(req);
+  async getAll(req: Request, res: Response, next: NextFunction) {
+    return await this.productImagesRepository.find();
   }
 }

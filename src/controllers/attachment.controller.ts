@@ -1,19 +1,14 @@
-import { AttachmentsEntity } from 'src/entities/attachments.entity';
-import { RequestInterface } from '../interfaces/request.interface';
-import { AttachmentService } from 'src/services/attachment.service';
+import { AttachmentsEntity } from '../entities/attachments.entity';
+import { getRepository } from 'typeorm';
+import { Request, Response, NextFunction } from 'express';
+
 
 export class AttachmentController {
-  constructor(private readonly attachmentService: AttachmentService) {}
-  async getById(req: RequestInterface): Promise<AttachmentsEntity> {
-    return await this.attachmentService.getOne(req.params.id);
+  private attachmentRepository = getRepository(AttachmentsEntity);
+  async getById(req: Request, res: Response, next: NextFunction)  {
+    return await this.attachmentRepository.findOne(req.params.id)
   }
-  async getAll(): Promise<AttachmentsEntity[]> {
-    return await this.attachmentService.getAll();
-  }
-  async deleteById(req: RequestInterface): Promise<void> {
-    return await this.attachmentService.deleteOne(req.params.id);
-  }
-  async createByProperties(req: {}): Promise<void> {    
-    return this.attachmentService.createOne(req);
+  async getAll(req: Request, res: Response, next: NextFunction) {
+    return await this.attachmentRepository.find();
   }
 }

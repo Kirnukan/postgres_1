@@ -1,42 +1,38 @@
 import 'reflect-metadata';
 import { createConnection } from 'typeorm';
 import { getOrmConfig } from './config/typeorm';
-import { ProductsEntity } from './entities/products.entity';
-import { PostgresDataProvider } from './providers/postgresDataProvider';
-import { EntitiesRepository } from './repositories/entities.repository';
-import { router } from './server';
+import { Swagger } from './docs/swagger';
+import { Routes } from './routes/routes';
+import express from 'express'
+import swaggerUI from 'swagger-ui-express'
+import { configService } from './services/config.service';
+import { Request, Response } from "express";
 
 async function main() {
+    const ormConnection = await createConnection(getOrmConfig());
+    await ormConnection.runMigrations();
+    const swaggerSpec = Swagger();
+    const app = express();
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
+    app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
     const connection = await createConnection(getOrmConfig());
-    const entitiesRepository = new EntitiesRepository(connection)
     await connection.runMigrations();
-    const productRepository = entitiesRepository.productsRepository;
-    const orderRepository = entitiesRepository.ordersRepository;
-    const attachmentRepository = entitiesRepository.attachmentRepository;
-    const brandRepository = entitiesRepository.brandsRepository;
-    const cartRepository = entitiesRepository.cartsRepository;
-    const categoryRepository = entitiesRepository.categoriesRepository;
-    const currencyRepository = entitiesRepository.currenciesRepository;
-    const customerRepository = entitiesRepository.customersRepository;
-    const paymentRepository = entitiesRepository.paymentsRepository;
-    const productImagesRepository = entitiesRepository.productsImagesRepository;
-    const productPropertiesRepository = entitiesRepository.productsPropertiesRepository;
-    const propertyRepository = entitiesRepository.propertiesRepository;
+    app.listen(configService.port);
 
+    Routes.forEach(route => {
+        (app as any)[route.method](route.route, (req: Request, res: Response, next: Function) => {
+            const result = (new (route.controller as any))[route.action](req, res, next);
+            if (result instanceof Promise) {
+                result.then(result => result !== null && result !== undefined ? res.send(result) : undefined);
 
-
-    await productRepository.save({
-        name: 'New product from code',
-        availableAmount: 100,
+            } else if (result !== null && result !== undefined) {
+                res.json(result);
+            }
+        });
     });
 
-    const [items, count] = await productRepository.findAndCount({
-        skip: 10,
-        take: 20
-    });
-    console.log(items.length, count);
 
-    await connection.close();
 }
 
 

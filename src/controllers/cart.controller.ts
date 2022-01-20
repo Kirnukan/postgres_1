@@ -1,19 +1,14 @@
-import { CartsEntity } from 'src/entities/carts.entity';
-import { RequestInterface } from '../interfaces/request.interface';
-import { CartService } from 'src/services/cart.service';
+import { CartsEntity } from '../entities/carts.entity';
+import { getRepository } from 'typeorm';
+import { Request, Response, NextFunction } from 'express';
+
 
 export class CartController {
-  constructor(private readonly cartService: CartService) {}
-  async getById(req: RequestInterface): Promise<CartsEntity> {
-    return await this.cartService.getOne(req.params.id);
+  private cartRepository = getRepository(CartsEntity);
+  async getById(req: Request, res: Response, next: NextFunction)  {
+    return await this.cartRepository.findOne(req.params.id)
   }
-  async getAll(): Promise<CartsEntity[]> {
-    return await this.cartService.getAll();
-  }
-  async deleteById(req: RequestInterface): Promise<void> {
-    return await this.cartService.deleteOne(req.params.id);
-  }
-  async createByProperties(req: {}): Promise<void> {    
-    return this.cartService.createOne(req);
+  async getAll(req: Request, res: Response, next: NextFunction) {
+    return await this.cartRepository.find();
   }
 }

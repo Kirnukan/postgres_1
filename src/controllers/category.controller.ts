@@ -1,19 +1,14 @@
-import { CategoriesEntity } from 'src/entities/categories.entity';
-import { RequestInterface } from '../interfaces/request.interface';
-import { CategoryService } from 'src/services/category.service';
+import { CategoriesEntity } from '../entities/categories.entity';
+import { getRepository } from 'typeorm';
+import { Request, Response, NextFunction } from 'express';
+
 
 export class CategoryController {
-  constructor(private readonly categoryService: CategoryService) {}
-  async getById(req: RequestInterface): Promise<CategoriesEntity> {
-    return await this.categoryService.getOne(req.params.id);
+  private categoryRepository = getRepository(CategoriesEntity);
+  async getById(req: Request, res: Response, next: NextFunction)  {
+    return await this.categoryRepository.findOne(req.params.id)
   }
-  async getAll(): Promise<CategoriesEntity[]> {
-    return await this.categoryService.getAll();
-  }
-  async deleteById(req: RequestInterface): Promise<void> {
-    return await this.categoryService.deleteOne(req.params.id);
-  }
-  async createByProperties(req: {}): Promise<void> {    
-    return this.categoryService.createOne(req);
+  async getAll(req: Request, res: Response, next: NextFunction) {
+    return await this.categoryRepository.find();
   }
 }

@@ -2,10 +2,10 @@ import { RequestInterface } from './request.interface';
 
 export type THandler = (request: RequestInterface) => unknown;
 export enum EMethod {
-  GET,
-  POST,
-  PUT,
-  DELETE
+  GET='GET',
+  POST='POST',
+  PUT='PUT',
+  DELETE='DELETE'
 }
 
 export interface ListenerInterface {

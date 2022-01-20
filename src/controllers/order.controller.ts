@@ -1,19 +1,14 @@
 import { OrdersEntity } from '../entities/orders.entity';
-import { RequestInterface } from '../interfaces/request.interface';
-import { OrderService } from '../services/order.service';
+import { getRepository } from 'typeorm';
+import { Request, Response, NextFunction } from 'express';
+
 
 export class OrderController {
-  constructor(private readonly orderService: OrderService) {}
-  async getById(req: RequestInterface): Promise<OrdersEntity> {
-    return await this.orderService.getOne(req.params.id);
+  private orderRepository = getRepository(OrdersEntity);
+  async getById(req: Request, res: Response, next: NextFunction)  {
+    return await this.orderRepository.findOne(req.params.id)
   }
-  async getAll(): Promise<OrdersEntity[]> {
-    return await this.orderService.getAll();
-  }
-  async deleteById(req: RequestInterface): Promise<void> {
-    return await this.orderService.deleteOne(req.params.id);
-  }
-  async createByProperties(req: {}): Promise<void> {    
-    return this.orderService.createOne(req);
+  async getAll(req: Request, res: Response, next: NextFunction) {
+    return await this.orderRepository.find();
   }
 }

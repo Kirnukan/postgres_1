@@ -18,7 +18,7 @@ export function getOrmConfig(): PostgresConnectionOptions {
         namingStrategy: new SnakeNamingStrategy(),
         logging: 'all',
         cli: {
-            migrationsDir: 'src/migrations',
+            migrationsDir: '../migrations',
         },
     };
 }

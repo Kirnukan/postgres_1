@@ -1,19 +1,14 @@
-import { PaymentsEntity } from 'src/entities/payments.entity';
-import { RequestInterface } from '../interfaces/request.interface';
-import { PaymentService } from 'src/services/payment.service';
+import { PaymentsEntity } from '../entities/payments.entity';
+import { getRepository } from 'typeorm';
+import { Request, Response, NextFunction } from 'express';
+
 
 export class PaymentController {
-  constructor(private readonly paymentService: PaymentService) {}
-  async getById(req: RequestInterface): Promise<PaymentsEntity> {
-    return await this.paymentService.getOne(req.params.id);
+  private paymentRepository = getRepository(PaymentsEntity);
+  async getById(req: Request, res: Response, next: NextFunction)  {
+    return await this.paymentRepository.findOne(req.params.id)
   }
-  async getAll(): Promise<PaymentsEntity[]> {
-    return await this.paymentService.getAll();
-  }
-  async deleteById(req: RequestInterface): Promise<void> {
-    return await this.paymentService.deleteOne(req.params.id);
-  }
-  async createByProperties(req: {}): Promise<void> {    
-    return this.paymentService.createOne(req);
+  async getAll(req: Request, res: Response, next: NextFunction) {
+    return await this.paymentRepository.find();
   }
 }

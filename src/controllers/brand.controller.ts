@@ -1,19 +1,14 @@
-import { BrandsEntity } from 'src/entities/brands.entity';
-import { RequestInterface } from '../interfaces/request.interface';
-import { BrandService } from 'src/services/brand.service';
+import { BrandsEntity } from '../entities/brands.entity';
+import { getRepository } from 'typeorm';
+import { Request, Response, NextFunction } from 'express';
+
 
 export class BrandController {
-  constructor(private readonly brandService: BrandService) {}
-  async getById(req: RequestInterface): Promise<BrandsEntity> {
-    return await this.brandService.getOne(req.params.id);
+  private brandRepository = getRepository(BrandsEntity);
+  async getById(req: Request, res: Response, next: NextFunction)  {
+    return await this.brandRepository.findOne(req.params.id)
   }
-  async getAll(): Promise<BrandsEntity[]> {
-    return await this.brandService.getAll();
-  }
-  async deleteById(req: RequestInterface): Promise<void> {
-    return await this.brandService.deleteOne(req.params.id);
-  }
-  async createByProperties(req: {}): Promise<void> {    
-    return this.brandService.createOne(req);
+  async getAll(req: Request, res: Response, next: NextFunction) {
+    return await this.brandRepository.find();
   }
 }

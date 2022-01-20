@@ -22,3 +22,6 @@ services:
       - DB_PORT=5432
     depends_on:
       - db
+    ports:
+      - '3000:3000'
+

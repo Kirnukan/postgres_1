@@ -1,19 +1,14 @@
-import { PropertiesEntity } from 'src/entities/properties.entity';
-import { RequestInterface } from '../interfaces/request.interface';
-import { PropertyService } from 'src/services/property.service';
+import { Request, Response, NextFunction } from 'express';
+
+import { PropertiesEntity } from '../entities/properties.entity';
+import { getRepository } from 'typeorm';
 
 export class PropertyController {
-  constructor(private readonly propertyService: PropertyService) {}
-  async getById(req: RequestInterface): Promise<PropertiesEntity> {
-    return await this.propertyService.getOne(req.params.id);
+  private propertyRepository = getRepository(PropertiesEntity);
+  async getById(req: Request, res: Response, next: NextFunction)  {
+    return await this.propertyRepository.findOne(req.params.id)
   }
-  async getAll(): Promise<PropertiesEntity[]> {
-    return await this.propertyService.getAll();
-  }
-  async deleteById(req: RequestInterface): Promise<void> {
-    return await this.propertyService.deleteOne(req.params.id);
-  }
-  async createByProperties(req: {}): Promise<void> {    
-    return this.propertyService.createOne(req);
+  async getAll(req: Request, res: Response, next: NextFunction) {
+    return await this.propertyRepository.find();
   }
 }

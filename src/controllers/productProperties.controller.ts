@@ -1,19 +1,14 @@
-import { ProductsPropertiesEntity } from 'src/entities/productsProperties.entity';
-import { RequestInterface } from '../interfaces/request.interface';
-import { ProductPropertiesService } from 'src/services/productProperties.service';
+import { ProductsPropertiesEntity } from '../entities/productsProperties.entity';
+import { getRepository } from 'typeorm';
+import { Request, Response, NextFunction } from 'express';
+
 
 export class ProductPropertiesController {
-  constructor(private readonly productPropertiesService: ProductPropertiesService) {}
-  async getById(req: RequestInterface): Promise<ProductsPropertiesEntity> {
-    return await this.productPropertiesService.getOne(req.params.id);
+  private productPropertiesRepository = getRepository(ProductsPropertiesEntity);
+  async getById(req: Request, res: Response, next: NextFunction)  {
+    return await this.productPropertiesRepository.findOne(req.params.id)
   }
-  async getAll(): Promise<ProductsPropertiesEntity[]> {
-    return await this.productPropertiesService.getAll();
-  }
-  async deleteById(req: RequestInterface): Promise<void> {
-    return await this.productPropertiesService.deleteOne(req.params.id);
-  }
-  async createByProperties(req: {}): Promise<void> {    
-    return this.productPropertiesService.createOne(req);
+  async getAll(req: Request, res: Response, next: NextFunction) {
+    return await this.productPropertiesRepository.find();
   }
 }
