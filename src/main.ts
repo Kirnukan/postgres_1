@@ -9,9 +9,12 @@ import { configService } from './services/config.service';
 import { Request, Response } from "express";
 
 async function main() {
+
     const ormConnection = await createConnection(getOrmConfig());
     await ormConnection.runMigrations();
+
     const swaggerSpec = Swagger();
+
     const app = express();
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
@@ -31,8 +34,6 @@ async function main() {
             }
         });
     });
-
-
 }
 
 
