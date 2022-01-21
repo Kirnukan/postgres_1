@@ -1,4 +1,4 @@
- import { Column, Entity, OneToOne } from 'typeorm';
+ import { Column, Entity, OneToOne, JoinColumn } from 'typeorm';
 import { BrandsEntity } from './brands.entity';
 import { CategoriesEntity } from './categories.entity';
 import { CurrenciesEntity } from './currencies.entity';
@@ -57,6 +57,7 @@ export class ProductsEntity extends BaseClass{
   price!: number;
 
   @OneToOne(() => CategoriesEntity)
+  @JoinColumn()
   @IsInt()
   @Column({
     type: 'numeric',
@@ -65,6 +66,7 @@ export class ProductsEntity extends BaseClass{
   category_id!: number;
 
   @OneToOne(() => CurrenciesEntity)
+  @JoinColumn()
   @IsInt()
   @Column({
     type: 'numeric',
@@ -73,6 +75,7 @@ export class ProductsEntity extends BaseClass{
   currency_id!: number;
 
   @OneToOne(() => BrandsEntity)
+  @JoinColumn()
   @IsInt()
   @Column({
     type: 'numeric',

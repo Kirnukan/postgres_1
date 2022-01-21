@@ -1,4 +1,4 @@
- import { Column, Entity, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
+ import { Column, Entity, OneToOne, JoinColumn } from 'typeorm';
 import { ProductsEntity } from './products.entity';
 import { BaseClass } from './BaseClass';
 import {
@@ -32,6 +32,7 @@ export class CategoriesEntity extends BaseClass   {
   rank!: number;
 
   @OneToOne(() => ProductsEntity)
+  @JoinColumn()
   @IsInt()
   @Column({
     type: 'numeric',

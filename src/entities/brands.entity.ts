@@ -1,4 +1,4 @@
-import { Column, Entity, OneToOne } from 'typeorm';
+import { Column, Entity, OneToOne, JoinColumn } from 'typeorm';
 import { AttachmentsEntity } from './attachments.entity';
 import { BaseClass } from './BaseClass';
 import {
@@ -24,6 +24,7 @@ export class BrandsEntity extends BaseClass   {
   caption!: string;
   
   @OneToOne(() => AttachmentsEntity)
+  @JoinColumn()
   @IsInt()
   @Column({
     type: 'numeric',

@@ -1,4 +1,4 @@
- import { Column, Entity, OneToOne } from 'typeorm';
+ import { Column, Entity, OneToOne, JoinColumn } from 'typeorm';
 import { ProductsEntity } from './products.entity';
 import { PropertiesEntity } from './properties.entity';
 import { BaseClass } from './BaseClass';
@@ -19,6 +19,7 @@ import {
 @Entity('products_properties')
 export class ProductsPropertiesEntity extends BaseClass   {
   @OneToOne(() => ProductsEntity)
+  @JoinColumn()
   @IsInt()
   @Column({
     type: 'numeric',
@@ -26,6 +27,7 @@ export class ProductsPropertiesEntity extends BaseClass   {
   })    
   product_id!: number;
   @OneToOne(() => PropertiesEntity)
+  @JoinColumn()
   @IsInt()
   @Column({
     type: 'numeric',
