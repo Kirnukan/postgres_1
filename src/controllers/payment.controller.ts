@@ -1,20 +1,23 @@
-import { PaymentsEntity } from '../entities/payments.entity';
-import { getRepository } from 'typeorm';
-import { Request, Response, NextFunction } from 'express';
+import { PaymentsEntity } from "../entities/payments.entity";
+import { RequestInterface } from "../interfaces/request.interface";
+import { PaymentsService } from "../services/payments.service";
 
+export class PaymentsController {
+   private readonly paymentsService: PaymentsService;
 
-export class PaymentController {
-  
-  private paymentRepository = getRepository(PaymentsEntity);
+   constructor(paymentsService: PaymentsService) {
+      this.paymentsService = paymentsService;
+   }
 
-  async getById(req: Request, res: Response, next: NextFunction)  {
-    if (req.params.id) {
-    return await this.paymentRepository.findOne(req.params.id)
-        }
-    throw "Have not ID"
-  }
+   async getPayment(req: RequestInterface): Promise<PaymentsEntity> {
+      if (req.params.id || +req.params.id) {
+        return this.paymentsService.findOne(+req.params.id);
+      }
+      throw 'Have not  id';
+   }
+   
+   async getPayments(): Promise<PaymentsEntity[]> {
+      return this.paymentsService.findAll();
+   }
 
-  async getAll(req: Request, res: Response, next: NextFunction) {
-    return await this.paymentRepository.find();
-  }
 }

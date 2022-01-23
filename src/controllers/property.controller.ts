@@ -1,20 +1,23 @@
-import { Request, Response, NextFunction } from 'express';
+import { PropertiesEntity } from "../entities/properties.entity";
+import { PropertiesService } from "../services/properties.service";
+import { RequestInterface } from "../interfaces/request.interface";
 
-import { PropertiesEntity } from '../entities/properties.entity';
-import { getRepository } from 'typeorm';
+export class PropertiesController {
+   private readonly propertiesService: PropertiesService;
 
-export class PropertyController {
-  
-  private propertyRepository = getRepository(PropertiesEntity);
+   constructor(propertiesService: PropertiesService) {
+      this.propertiesService = propertiesService;
+   }
 
-  async getById(req: Request, res: Response, next: NextFunction)  {
-    if (req.params.id) {
-    return await this.propertyRepository.findOne(req.params.id)
-    }
-    throw "Have not ID"
-  }
+   async getProperty(req: RequestInterface): Promise<PropertiesEntity> {
+      if (req.params.id || +req.params.id) {
+        return this.propertiesService.findOne(+req.params.id);
+      }
+      throw 'Have not  id';
+   }
+   
+   async getProperties(): Promise<PropertiesEntity[]> {
+      return this.propertiesService.findAll();
+   }
 
-  async getAll(req: Request, res: Response, next: NextFunction) {
-    return await this.propertyRepository.find();
-  }
 }

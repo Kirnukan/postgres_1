@@ -1,20 +1,23 @@
-import { CurrenciesEntity } from '../entities/currencies.entity';
-import { getRepository } from 'typeorm';
-import { Request, Response, NextFunction } from 'express';
+import { CurrenciesEntity } from "../entities/currencies.entity";
+import { RequestInterface } from "../interfaces/request.interface";
+import { CurrenciesService } from "../services/currencies.service";
 
+export class CurrenciesController {
+   private readonly currenciesService: CurrenciesService;
 
-export class CurrencyController {
-  
-  private currencyRepository = getRepository(CurrenciesEntity);
+   constructor(currenciesService: CurrenciesService) {
+      this.currenciesService = currenciesService;
+   }
 
-  async getById(req: Request, res: Response, next: NextFunction)  {
-    if (req.params.id) {
-    return await this.currencyRepository.findOne(req.params.id)
-        }
-    throw "Have not ID"
-  }
+   async getCurrency(req: RequestInterface): Promise<CurrenciesEntity> {
+      if (req.params.id || +req.params.id) {
+        return this.currenciesService.findOne(+req.params.id);
+      }
+      throw 'Have not  id';
+   }
+   
+   async getCurrencies(): Promise<CurrenciesEntity[]> {
+      return this.currenciesService.findAll();
+   }
 
-  async getAll(req: Request, res: Response, next: NextFunction) {
-    return await this.currencyRepository.find();
-  }
 }

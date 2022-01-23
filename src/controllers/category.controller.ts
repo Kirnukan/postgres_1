@@ -1,20 +1,24 @@
-import { CategoriesEntity } from '../entities/categories.entity';
-import { getRepository } from 'typeorm';
-import { Request, Response, NextFunction } from 'express';
+import { CategoriesEntity } from "../entities/categories.entity";
+import { CategoriesService } from "../services/categories.service";
+import { RequestInterface } from "../interfaces/request.interface";
 
 
-export class CategoryController {
+export class CategoriesController {
+   private readonly categoriesService: CategoriesService;
 
-  private categoryRepository = getRepository(CategoriesEntity);
+   constructor(categoriesService: CategoriesService) {
+      this.categoriesService = categoriesService;
+   }
 
-  async getById(req: Request, res: Response, next: NextFunction)  {
-    if (req.params.id) {
-    return await this.categoryRepository.findOne(req.params.id)
-        }
-    throw "Have not ID"
-  }
-  
-  async getAll(req: Request, res: Response, next: NextFunction) {
-    return await this.categoryRepository.find();
-  }
+   async getCategory(req: RequestInterface): Promise<CategoriesEntity> {
+      if (req.params.id || +req.params.id) {
+        return this.categoriesService.findOne(+req.params.id);
+      }
+      throw 'Have not  id';
+   }
+   
+   async getCategories(): Promise<CategoriesEntity[]> {
+      return this.categoriesService.findAll();
+   }
+
 }

@@ -1,15 +1,15 @@
-import { AttachmentController } from '../controllers/attachment.controller';
-import { BrandController } from '../controllers/brand.controller';
-import { CartController } from '../controllers/cart.controller';
-import { CategoryController } from '../controllers/category.controller';
-import { CurrencyController } from '../controllers/currency.controller';
-import { CustomerController } from '../controllers/customer.controller';
-import { OrderController } from '../controllers/order.controller';
-import { PaymentController } from '../controllers/payment.controller';
-import { ProductController } from '../controllers/product.controller';
+import { AttachmentsController } from '../controllers/attachment.controller';
+import { BrandsController } from '../controllers/brand.controller';
+import { CartsController } from '../controllers/cart.controller';
+import { CategoriesController } from '../controllers/category.controller';
+import { CurrenciesController } from '../controllers/currency.controller';
+import { CustomersController } from '../controllers/customer.controller';
+import { OrdersController } from '../controllers/order.controller';
+import { PaymentsController } from '../controllers/payment.controller';
+import { ProductsController } from '../controllers/product.controller';
 import { ProductImagesController } from '../controllers/productImages.controller';
 import { ProductPropertiesController } from '../controllers/productProperties.controller';
-import { PropertyController } from '../controllers/property.controller';
+import { PropertiesController } from '../controllers/property.controller';
 import { EMethod } from '../interfaces/listener.interface';
 
 export const Routes = [  

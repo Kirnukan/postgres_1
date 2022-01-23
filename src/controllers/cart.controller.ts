@@ -1,20 +1,24 @@
-import { CartsEntity } from '../entities/carts.entity';
-import { getRepository } from 'typeorm';
-import { Request, Response, NextFunction } from 'express';
+import { CartsEntity } from "../entities/carts.entity";
+import { CartsService } from "../services/carts.service";
+import { RequestInterface } from "../interfaces/request.interface";
 
 
-export class CartController {
-  
-  private cartRepository = getRepository(CartsEntity);
+export class CartsController {
+   private readonly cartsService: CartsService;
 
-  async getById(req: Request, res: Response, next: NextFunction)  {
-    if (req.params.id) {
-    return await this.cartRepository.findOne(req.params.id)
-        }
-    throw "Have not ID"
-  }
+   constructor(cartsService: CartsService) {
+      this.cartsService = cartsService;
+   }
 
-  async getAll(req: Request, res: Response, next: NextFunction) {
-    return await this.cartRepository.find();
-  }
+   async getCart(req: RequestInterface): Promise<CartsEntity> {
+      if (req.params.id || +req.params.id) {
+        return this.cartsService.findOne(+req.params.id);
+      }
+      throw 'Have not  id';
+   }
+   
+   async getCarts(): Promise<CartsEntity[]> {
+      return this.cartsService.findAll();
+   }
+
 }

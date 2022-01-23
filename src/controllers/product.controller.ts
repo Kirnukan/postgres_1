@@ -1,20 +1,24 @@
-import { ProductsEntity } from '../entities/products.entity';
-import { getRepository } from 'typeorm';
-import { Request, Response, NextFunction } from 'express';
+import { ProductsEntity } from "../entities/products.entity";
+import { ProductsService } from "../services/products.service";
+import { RequestInterface } from "../interfaces/request.interface";
 
 
-export class ProductController {
-  
-  private productRepository = getRepository(ProductsEntity);
+export class ProductsController {
+   private readonly productsService: ProductsService;
 
-  async getById(req: Request, res: Response, next: NextFunction)  {
-    if (req.params.id) {
-    return await this.productRepository.findOne(req.params.id)
-        }
-    throw "Have not ID"
-  }
+   constructor(productsService: ProductsService) {
+      this.productsService = productsService;
+   }
 
-  async getAll(req: Request, res: Response, next: NextFunction) {
-    return await this.productRepository.find();
-  }
+   async getProduct(req: RequestInterface): Promise<ProductsEntity> {
+      if (req.params.id || +req.params.id) {
+        return this.productsService.findOne(+req.params.id);
+      }
+      throw 'Have not  id';
+   }
+   
+   async getProducts(): Promise<ProductsEntity[]> {
+      return this.productsService.findAll();
+   }
+
 }

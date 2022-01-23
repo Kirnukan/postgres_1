@@ -1,20 +1,24 @@
-import { AttachmentsEntity } from '../entities/attachments.entity';
-import { getRepository } from 'typeorm';
-import { Request, Response, NextFunction } from 'express';
+import { AttachmentsEntity } from "../entities/attachments.entity";
+import { RequestInterface } from "../interfaces/request.interface";
+import { AttachmentsService } from "../services/attachments.service";
+
+export class AttachmentsController {
+   private readonly attachmentsService: AttachmentsService;
+
+   constructor(attachmentsService: AttachmentsService) {
+      this.attachmentsService = attachmentsService;
+   }
+
+   async getAttachment(req: RequestInterface): Promise<AttachmentsEntity> {
+      if (req.params.id || +req.params.id) {
+        return this.attachmentsService.findOne(+req.params.id);
+      }
+      throw 'Have not  id';
+   }
+
+   async getAttachments(): Promise<AttachmentsEntity[]> {
+      return this.attachmentsService.findAll();
+   }
 
 
-export class AttachmentController {
-
-  private attachmentRepository = getRepository(AttachmentsEntity);
-
-  async getById(req: Request, res: Response, next: NextFunction)  {
-    if (req.params.id) {
-      return await this.attachmentRepository.findOne(req.params.id)
-        }
-    throw "Have not ID"
-  }
-  
-  async getAll(req: Request, res: Response, next: NextFunction) {
-    return await this.attachmentRepository.find();
-  }
 }

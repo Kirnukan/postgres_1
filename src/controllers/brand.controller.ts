@@ -1,20 +1,23 @@
-import { BrandsEntity } from '../entities/brands.entity';
-import { getRepository } from 'typeorm';
-import { Request, Response, NextFunction } from 'express';
+import { BrandsEntity } from "../entities/brands.entity";
+import { RequestInterface } from "../interfaces/request.interface";
+import { BrandsService } from "../services/brands.service";
 
+export class BrandsController {
+   private readonly brandsService: BrandsService;
 
-export class BrandController {
-  
-  private brandRepository = getRepository(BrandsEntity);
+   constructor(brandsService: BrandsService) {
+      this.brandsService = brandsService;
+   }
 
-  async getById(req: Request, res: Response, next: NextFunction)  {
-    if (req.params.id) {
-    return await this.brandRepository.findOne(req.params.id)
-        }
-    throw "Have not ID"
-  }
+   async getBrand(req: RequestInterface): Promise<BrandsEntity> {
+      if (req.params.id || +req.params.id) {
+        return this.brandsService.findOne(+req.params.id);
+      }
+      throw 'Have not  id';
+   }
 
-  async getAll(req: Request, res: Response, next: NextFunction) {
-    return await this.brandRepository.find();
-  }
+   async getBrands(): Promise<BrandsEntity[]> {
+      return this.brandsService.findAll();
+   }
+
 }

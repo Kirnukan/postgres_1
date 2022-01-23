@@ -1,20 +1,23 @@
-import { CustomersEntity } from '../entities/customers.entity';
-import { getRepository } from 'typeorm';
-import { Request, Response, NextFunction } from 'express';
+import { CustomersEntity } from "../entities/customers.entity";
+import { RequestInterface } from "../interfaces/request.interface";
+import { CustomersService } from "../services/customers.service";
 
+export class CustomersController {
+   private readonly customersService: CustomersService;
 
-export class CustomerController {
-  
-  private customerRepository = getRepository(CustomersEntity);
+   constructor(customersService: CustomersService) {
+      this.customersService = customersService;
+   }
 
-  async getById(req: Request, res: Response, next: NextFunction)  {
-    if (req.params.id) {
-    return await this.customerRepository.findOne(req.params.id)
-        }
-    throw "Have not ID"
-  }
+   async getCustomer(req: RequestInterface): Promise<CustomersEntity> {
+      if (req.params.id || +req.params.id) {
+        return this.customersService.findOne(+req.params.id);
+      }
+      throw 'Have not  id';
+   }
+   
+   async getCustomers(): Promise<CustomersEntity[]> {
+      return this.customersService.findAll();
+   }
 
-  async getAll(req: Request, res: Response, next: NextFunction) {
-    return await this.customerRepository.find();
-  }
 }

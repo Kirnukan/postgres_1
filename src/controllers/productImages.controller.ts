@@ -1,20 +1,24 @@
-import { ProductsImagesEntity } from '../entities/productsImages.entity';
-import { getRepository } from 'typeorm';
-import { Request, Response, NextFunction } from 'express';
+import { ProductsImagesEntity } from "../entities/productsImages.entity";
+import { ProductImagesService } from "../services/productImages.service";
+import { RequestInterface } from "../interfaces/request.interface";
 
 
 export class ProductImagesController {
+   private readonly productImagesService: ProductImagesService;
 
-  private productImagesRepository = getRepository(ProductsImagesEntity);
-  
-  async getById(req: Request, res: Response, next: NextFunction)  {
-    if (req.params.id) {
-    return await this.productImagesRepository.findOne(req.params.id)
-        }
-    throw "Have not ID"
-  }
+   constructor(productImagesService: ProductImagesService) {
+      this.productImagesService = productImagesService;
+   }
 
-  async getAll(req: Request, res: Response, next: NextFunction) {
-    return await this.productImagesRepository.find();
-  }
+   async getProductImage(req: RequestInterface): Promise<ProductsImagesEntity> {
+      if (req.params.id || +req.params.id) {
+        return this.productImagesService.findOne(+req.params.id);
+      }
+      throw 'Have not  id';
+   }
+   
+   async getProductImages(): Promise<ProductsImagesEntity[]> {
+      return this.productImagesService.findAll();
+   }
+
 }
