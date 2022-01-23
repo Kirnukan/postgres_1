@@ -32,7 +32,7 @@ export class CategoriesEntity extends BaseClass   {
   rank!: number;
 
   @OneToOne(() => ProductsEntity)
-  @JoinColumn()
+
   @IsInt()
   @Column({
     type: 'numeric',

@@ -26,7 +26,7 @@ export enum orderStatus {
 @Entity('orders')
 export class OrdersEntity extends BaseClass   {
   @OneToOne(() => CustomersEntity)
-  @JoinColumn()
+
   @IsInt()
   @Column({
     type: 'numeric',

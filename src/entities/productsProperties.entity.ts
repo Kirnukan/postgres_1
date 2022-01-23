@@ -19,7 +19,7 @@ import {
 @Entity('products_properties')
 export class ProductsPropertiesEntity extends BaseClass   {
   @OneToOne(() => ProductsEntity)
-  @JoinColumn()
+
   @IsInt()
   @Column({
     type: 'numeric',
@@ -27,7 +27,7 @@ export class ProductsPropertiesEntity extends BaseClass   {
   })    
   product_id!: number;
   @OneToOne(() => PropertiesEntity)
-  @JoinColumn()
+
   @IsInt()
   @Column({
     type: 'numeric',

@@ -18,7 +18,7 @@ import {
 @Entity('carts')
 export class CartsEntity extends BaseClass   {
   @OneToOne(() => OrdersEntity)
-  @JoinColumn()
+
   @IsInt()
   @Column({
     type: 'numeric',
@@ -27,7 +27,7 @@ export class CartsEntity extends BaseClass   {
   order_id!: number;
   
   @OneToOne(() => ProductsEntity)
-  @JoinColumn()
+
   @IsInt()
   @Column({
     type: 'numeric',

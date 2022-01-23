@@ -24,7 +24,7 @@ export class BrandsEntity extends BaseClass   {
   caption!: string;
   
   @OneToOne(() => AttachmentsEntity)
-  @JoinColumn()
+
   @IsInt()
   @Column({
     type: 'numeric',

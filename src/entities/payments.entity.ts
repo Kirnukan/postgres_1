@@ -18,7 +18,7 @@ import {
 @Entity('payments')
 export class PaymentsEntity extends BaseClass   {
   @OneToOne(() => OrdersEntity)
-  @JoinColumn()
+
   @IsInt()
   @Column({
     type: 'numeric',
