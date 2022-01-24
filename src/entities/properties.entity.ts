@@ -1,5 +1,4 @@
-import { Column, Entity } from 'typeorm';
-import { BaseClass } from './BaseClass';
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import {
   validate,
   validateOrReject,
@@ -23,7 +22,10 @@ export enum propType {
 }
 
 @Entity('properties')
-export class PropertiesEntity extends BaseClass   {
+export class PropertiesEntity extends BaseEntity   {
+  @PrimaryGeneratedColumn()
+  id!: number;
+
   @Length(1, 124)
   @Column({
     type: 'varchar',

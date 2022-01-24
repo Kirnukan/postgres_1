@@ -1,6 +1,5 @@
- import { Column, Entity, OneToOne, JoinColumn } from 'typeorm';
+ import { Column, Entity, OneToOne, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
 import { OrdersEntity } from './orders.entity';
-import { BaseClass } from './BaseClass';
 import {
   validate,
   validateOrReject,
@@ -16,9 +15,11 @@ import {
 
 
 @Entity('payments')
-export class PaymentsEntity extends BaseClass   {
-  @OneToOne(() => OrdersEntity)
+export class PaymentsEntity extends BaseEntity   {
+  @PrimaryGeneratedColumn()
+  id!: number;
 
+  @OneToOne(() => OrdersEntity)
   @IsInt()
   @Column({
     type: 'numeric',

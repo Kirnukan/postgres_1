@@ -15,8 +15,8 @@ export class CurrenciesService {
    async findOne(id: number): Promise<CurrenciesEntity> {
       const result = await this.currenciesRepository.findOne(id);
       if (result) {
-         throw 'Have not result'
+         return result;
       }
-      return result;
+      throw 'Have not result';
    }
 }

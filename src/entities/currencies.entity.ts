@@ -1,5 +1,4 @@
- import { Column, Entity } from 'typeorm';
- import { BaseClass } from './BaseClass';
+ import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
  import {
   validate,
   validateOrReject,
@@ -16,7 +15,10 @@
 
 
 @Entity('currencies')
-export class CurrenciesEntity extends BaseClass   {
+export class CurrenciesEntity extends BaseEntity   {
+  @PrimaryGeneratedColumn()
+  id!: number;
+
   @Length(1, 10)
   @IsCurrency()
   @Column({

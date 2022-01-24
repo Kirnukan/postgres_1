@@ -1,5 +1,4 @@
- import { Column, Entity } from 'typeorm';
- import { BaseClass } from './BaseClass';
+ import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
  import {
   validate,
   validateOrReject,
@@ -16,7 +15,10 @@
 
 
 @Entity('customers')
-export class CustomersEntity extends BaseClass   {
+export class CustomersEntity extends BaseEntity  {
+  @PrimaryGeneratedColumn()
+  id!: number;
+
   @Length(8, 64)
   @IsEmail()
   @Column({

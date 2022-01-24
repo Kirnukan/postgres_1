@@ -1,7 +1,6 @@
- import { Column, Entity, OneToOne, JoinColumn } from 'typeorm';
+ import { BaseEntity, Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { ProductsEntity } from './products.entity';
 import { PropertiesEntity } from './properties.entity';
-import { BaseClass } from './BaseClass';
 import {
   validate,
   validateOrReject,
@@ -17,9 +16,11 @@ import {
 
 
 @Entity('products_properties')
-export class ProductsPropertiesEntity extends BaseClass   {
-  @OneToOne(() => ProductsEntity)
+export class ProductsPropertiesEntity extends BaseEntity   {
+  @PrimaryGeneratedColumn()
+  id!: number;
 
+  @OneToOne(() => ProductsEntity)
   @IsInt()
   @Column({
     type: 'numeric',

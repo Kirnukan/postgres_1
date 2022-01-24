@@ -1,5 +1,4 @@
-import { Column, Entity } from 'typeorm';
-import { BaseClass } from './BaseClass';
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import {
   validate,
   validateOrReject,
@@ -15,7 +14,10 @@ import {
 
 
 @Entity('attachments')
-export class AttachmentsEntity extends BaseClass{
+export class AttachmentsEntity extends BaseEntity{
+  @PrimaryGeneratedColumn()
+  id!: number;
+
   @Length(5, 32)
   @Column({
     type: 'varchar',

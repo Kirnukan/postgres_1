@@ -1,6 +1,5 @@
- import { Column, Entity, ManyToOne} from 'typeorm';
+ import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
  import { AttachmentsEntity } from './attachments.entity';
- import { BaseClass } from './BaseClass';
  import {
   validate,
   validateOrReject,
@@ -16,7 +15,10 @@
 
 
 @Entity('products_images')
-export class ProductsImagesEntity extends BaseClass   {
+export class ProductsImagesEntity extends BaseEntity   {
+  @PrimaryGeneratedColumn()
+  id!: number;
+
   @ManyToOne(() => AttachmentsEntity)
   @IsInt()
   @Column({

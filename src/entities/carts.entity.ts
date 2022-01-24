@@ -1,4 +1,4 @@
- import { Column, Entity, OneToOne, JoinColumn } from 'typeorm';
+ import { BaseEntity, Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { OrdersEntity } from './orders.entity';
 import { ProductsEntity } from './products.entity';
 import { BaseClass } from './BaseClass';
@@ -16,9 +16,11 @@ import {
 } from 'class-validator';
 
 @Entity('carts')
-export class CartsEntity extends BaseClass   {
-  @OneToOne(() => OrdersEntity)
+export class CartsEntity extends BaseEntity   {
+  @PrimaryGeneratedColumn()
+  id!: number;
 
+  @OneToOne(() => OrdersEntity)
   @IsInt()
   @Column({
     type: 'numeric',

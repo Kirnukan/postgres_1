@@ -1,6 +1,5 @@
-import { Column, Entity, OneToOne, JoinColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { AttachmentsEntity } from './attachments.entity';
-import { BaseClass } from './BaseClass';
 import {
   validate,
   validateOrReject,
@@ -15,7 +14,10 @@ import {
 } from 'class-validator';
 
 @Entity('brands')
-export class BrandsEntity extends BaseClass   {
+export class BrandsEntity extends BaseEntity   {
+  @PrimaryGeneratedColumn()
+  id!: number;
+
   @Length(5, 132)
   @Column({
     type: 'varchar',

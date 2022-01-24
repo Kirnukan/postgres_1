@@ -1,6 +1,5 @@
- import { Column, Entity, OneToOne, JoinColumn } from 'typeorm';
+ import { Column, Entity, OneToOne, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
 import { ProductsEntity } from './products.entity';
-import { BaseClass } from './BaseClass';
 import {
   validate,
   validateOrReject,
@@ -16,7 +15,10 @@ import {
 
 
 @Entity('categories')
-export class CategoriesEntity extends BaseClass   {
+export class CategoriesEntity extends BaseEntity   {
+  @PrimaryGeneratedColumn()
+  id!: number;
+
   @Length(5, 132)
   @Column({
     type: 'varchar',

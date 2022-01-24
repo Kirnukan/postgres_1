@@ -1,8 +1,7 @@
- import { Column, Entity, OneToOne, JoinColumn } from 'typeorm';
+ import { Column, Entity, OneToOne, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
 import { BrandsEntity } from './brands.entity';
 import { CategoriesEntity } from './categories.entity';
 import { CurrenciesEntity } from './currencies.entity';
-import { BaseClass } from './BaseClass';
 import {
   validate,
   validateOrReject,
@@ -18,7 +17,9 @@ import {
 
 
 @Entity('products')
-export class ProductsEntity extends BaseClass{
+export class ProductsEntity extends BaseEntity{
+  @PrimaryGeneratedColumn()
+  id!: number;
 
   @Length(1, 100)
   @Column({
