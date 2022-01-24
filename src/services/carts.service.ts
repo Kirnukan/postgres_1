@@ -14,9 +14,9 @@ export class CartsService {
 
    async findOne(id: number): Promise<CartsEntity> {
       const result = await this.cartsRepository.findOne(id);
-      if (!result) {
-         throw 'Have not result'
+      if (result) {
+         return result;
       }
-      return result;
+      throw 'Have not result';
    }
 }

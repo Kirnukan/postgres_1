@@ -5,13 +5,15 @@ import express from 'express'
 import cors from 'cors'
 import { swaggerSpec } from './swagger';
 import swaggerUI from 'swagger-ui-express'
+import { Connection } from 'typeorm';
 
 export class ExpressServer implements ListenerInterface {
     private port: number;
-    private httpServer: http.Server |null = null;
+    private httpServer: http.Server | null = null;
     private app: express.Application;
+    connection: Connection | null = null;
 
-    private existenceServer() {
+    private serverExistence () {
         if (this.httpServer) {
             return this.httpServer;
         } 
@@ -35,14 +37,14 @@ export class ExpressServer implements ListenerInterface {
     }
     stop(): Promise<void> {
         return new Promise((resolve, reject) => {
-            this.existenceServer().close((err) => {
+            this.serverExistence().close((err) => {
                 reject(err);
             });
             resolve();
         });
     }
     addHandler(method: EMethod, route: string, handler: THandler): void {
-        this.existenceServer();
+        this.serverExistence();
         switch (method) {
             case 'GET':
                this.app.get(route, async (req, res) => {

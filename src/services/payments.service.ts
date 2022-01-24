@@ -14,9 +14,9 @@ export class PaymentsService {
 
    async findOne(id: number): Promise<PaymentsEntity> {
       const result = await this.paymentsRepository.findOne(id);
-      if (!result) {
-         throw 'Have not result'
+      if (result) {
+         return result;
       }
-      return result;
+      throw 'Have not result';
    }
 }

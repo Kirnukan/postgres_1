@@ -14,9 +14,9 @@ export class BrandsService {
 
    async findOne(id: number): Promise<BrandsEntity> {
       const result = await this.brandsRepository.findOne(id);
-      if (!result) {
-         throw 'Have not result'
+      if (result) {
+         return result;
       }
-      return result;
+      throw 'Have not result';
    }
 }

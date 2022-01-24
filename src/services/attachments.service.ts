@@ -14,9 +14,9 @@ export class AttachmentsService {
 
    async findOne(id: number): Promise<AttachmentsEntity> {
       const result = await this.attachmentsRepository.findOne(id);
-      if (!result) {
-         throw 'Have not result'
+      if (result) {
+         return result;
       }
-      return result;
+      throw 'Have not result';
    }
 }

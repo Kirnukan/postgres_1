@@ -1,3 +1,7 @@
+import { EMethod } from '../interfaces/listener.interface';
+
+import { ExpressServer } from '../server';
+
 import { AttachmentsController } from '../controllers/attachment.controller';
 import { BrandsController } from '../controllers/brand.controller';
 import { CartsController } from '../controllers/cart.controller';
@@ -10,151 +14,225 @@ import { ProductsController } from '../controllers/product.controller';
 import { ProductImagesController } from '../controllers/productImages.controller';
 import { ProductPropertiesController } from '../controllers/productProperties.controller';
 import { PropertiesController } from '../controllers/property.controller';
-import { EMethod } from '../interfaces/listener.interface';
 
-export const Routes = [  
-    {
-        method: EMethod.GET,
-        route: '/attachments',
-        controller: AttachmentController,
-        action: 'getAll'
-    },
-    {
-        method: EMethod.GET,
-        route: '/attachments/:id',
-        controller: AttachmentController,
-        action: 'getById'
-    },
-    {
-        method: EMethod.GET,
-        route: '/brands',
-        controller: BrandController,
-        action: 'getAll'
-    },
-    {
-        method: EMethod.GET,
-        route: '/brands/:id',
-        controller: BrandController,
-        action: 'getById'
-    },
-    {
-        method: EMethod.GET,
-        route: '/carts',
-        controller: CartController,
-        action: 'getAll'
-    },
-    {
-        method: EMethod.GET,
-        route: '/carts/:id',
-        controller: CartController,
-        action: 'getById'
-    },
-    {
-        method: EMethod.GET,
-        route: '/categories',
-        controller: CategoryController,
-        action: 'getAll'
-    },
-    {
-        method: EMethod.GET,
-        route: '/categories/:id',
-        controller: CategoryController,
-        action: 'getById'
-    },
-    {
-        method: EMethod.GET,
-        route: '/currencies',
-        controller: CurrencyController,
-        action: 'getAll'
-    },
-    {
-        method: EMethod.GET,
-        route: '/currencies/:id',
-        controller: CurrencyController,
-        action: 'getById'
-    },
-    {
-        method: EMethod.GET,
-        route: '/customers',
-        controller: CustomerController,
-        action: 'getAll'
-    },
-    {
-        method: EMethod.GET,
-        route: '/customers/:id',
-        controller: CustomerController,
-        action: 'getById'
-    },
-    {
-        method: EMethod.GET,
-        route: '/orders',
-        controller: OrderController,
-        action: 'getAll'
-    },
-    {
-        method: EMethod.GET,
-        route: '/orders/:id',
-        controller: OrderController,
-        action: 'getById'
-    },
-    {
-        method: EMethod.GET,
-        route: '/payments',
-        controller: PaymentController,
-        action: 'getAll'
-    },
-    {
-        method: EMethod.GET,
-        route: '/payments/:id',
-        controller: PaymentController,
-        action: 'getById'
-    },
-    {
-        method: EMethod.GET,
-        route: '/products',
-        controller: ProductController,
-        action: 'getAll'
-    },
-    {
-        method: EMethod.GET,
-        route: '/products/:id',
-        controller: ProductController,
-        action: 'getById'
-    },
-    {
-        method: EMethod.GET,
-        route: '/product_images',
-        controller: ProductImagesController,
-        action: 'getAll'
-    },
-    {
-        method: EMethod.GET,
-        route: '/product_images/:id',
-        controller: ProductImagesController,
-        action: 'getById'
-    },
-    {
-        method: EMethod.GET,
-        route: '/product_properties',
-        controller: ProductPropertiesController,
-        action: 'getAll'
-    },
-    {
-        method: EMethod.GET,
-        route: '/product_properties/:id',
-        controller: ProductPropertiesController,
-        action: 'getById'
-    },
-    {
-        method: EMethod.GET,
-        route: '/properties',
-        controller: PropertyController,
-        action: 'getAll'
-    },   
-    {
-        method: EMethod.GET,
-        route: '/properties/:id',
-        controller: PropertyController,
-        action: 'getById'
+import { AttachmentsService } from 'src/services/attachments.service';
+import { BrandsService } from 'src/services/brands.service';
+import { CartsService } from 'src/services/carts.service';
+import { CategoriesService } from 'src/services/categories.service';
+import { CurrenciesService } from 'src/services/currencies.service';
+import { CustomersService } from 'src/services/customers.service';
+import { OrdersService } from 'src/services/orders.service';
+import { PaymentsService } from 'src/services/payments.service';
+import { ProductImagesService } from 'src/services/productImages.service';
+import { ProductPropertiesService } from 'src/services/productProperties.service';
+import { ProductsService } from 'src/services/products.service';
+import { PropertiesService } from 'src/services/properties.service';
+
+
+export async function router (expressServer: ExpressServer) {
+    if(!expressServer.connection) {
+        throw 'Have not connection';
     }
-];
+    const connection = expressServer.connection;
+
+    const entityServices = {
+        attachmentsService: new AttachmentsService(connection),
+        brandsService: new BrandsService(connection),
+        cartsService: new CartsService(connection),
+        categoriesService: new CategoriesService(connection),
+        currenciesService: new CurrenciesService(connection),
+        customersService: new CustomersService(connection),
+        ordersService: new OrdersService(connection),
+        paymentsService: new PaymentsService(connection),
+        productImagesService: new ProductImagesService(connection),
+        productPropertiesService: new ProductPropertiesService(connection),
+        productsService: new ProductsService(connection),
+        propertiesService: new PropertiesService(connection)
+    };
+
+    const entityControllers = {
+        attachmentsController: new AttachmentsController(entityServices.attachmentsService),
+        brandsController: new BrandsController(entityServices.brandsService),
+        cartsController: new CartsController(entityServices.cartsService),
+        categoriesController: new CategoriesController(entityServices.categoriesService),
+        currenciesController: new CurrenciesController(entityServices.currenciesService),
+        customersController: new CustomersController(entityServices.customersService),
+        ordersController: new OrdersController(entityServices.ordersService),
+        paymentsController: new PaymentsController(entityServices.paymentsService),
+        productImagesController: new ProductImagesController(entityServices.productImagesService),
+        productPropertiesController: new ProductPropertiesController(entityServices.productPropertiesService),
+        productsController: new ProductsController(entityServices.productsService),
+        propertiesController: new PropertiesController(entityServices.propertiesService)
+    };
+
+    const {
+        attachmentsController,
+        brandsController,
+        cartsController,
+        categoriesController,
+        currenciesController,
+        customersController,
+        ordersController,
+        paymentsController,
+        productImagesController,
+        productPropertiesController,
+        productsController,
+        propertiesController
+    } = entityControllers
+
+    
+    expressServer.addHandler(
+        EMethod.GET,
+        '/attachments',
+        attachmentsController.getAttachments.bind(attachmentsController)
+    )
+
+    expressServer.addHandler(
+        EMethod.GET,
+        '/attachments:id',
+        attachmentsController.getAttachment.bind(attachmentsController)
+    )
+
+    
+    expressServer.addHandler(
+        EMethod.GET,
+        '/brands',
+        brandsController.getBrands.bind(brandsController)
+    )
+
+    expressServer.addHandler(
+        EMethod.GET,
+        '/brands:id',
+        brandsController.getBrand.bind(brandsController)
+    )
+
+    
+    expressServer.addHandler(
+        EMethod.GET,
+        '/carts',
+        cartsController.getCarts.bind(cartsController)
+    )
+
+    expressServer.addHandler(
+        EMethod.GET,
+        '/carts:id',
+        cartsController.getCart.bind(cartsController)
+    )
+
+    
+    expressServer.addHandler(
+        EMethod.GET,
+        '/categories',
+        categoriesController.getCategories.bind(categoriesController)
+    )
+
+    expressServer.addHandler(
+        EMethod.GET,
+        '/categories:id',
+        categoriesController.getCategory.bind(categoriesController)
+    )
+
+    
+    expressServer.addHandler(
+        EMethod.GET,
+        '/currencies',
+        currenciesController.getCurrencies.bind(currenciesController)
+    )
+
+    expressServer.addHandler(
+        EMethod.GET,
+        '/currencies:id',
+        currenciesController.getCurrency.bind(currenciesController)
+    )
+
+    
+    expressServer.addHandler(
+        EMethod.GET,
+        '/customers',
+        customersController.getCustomers.bind(customersController)
+    )
+
+    expressServer.addHandler(
+        EMethod.GET,
+        '/customers:id',
+        customersController.getCustomer.bind(customersController)
+    )
+
+    
+    expressServer.addHandler(
+        EMethod.GET,
+        '/orders',
+        ordersController.getOrders.bind(ordersController)
+    )
+
+    expressServer.addHandler(
+        EMethod.GET,
+        '/orders:id',
+        ordersController.getOrder.bind(ordersController)
+    )
+
+    
+    expressServer.addHandler(
+        EMethod.GET,
+        '/payments',
+        paymentsController.getPayments.bind(paymentsController)
+    )
+
+    expressServer.addHandler(
+        EMethod.GET,
+        '/payments:id',
+        paymentsController.getPayment.bind(paymentsController)
+    )
+
+    
+    expressServer.addHandler(
+        EMethod.GET,
+        '/product_images',
+        productImagesController.getProductImages.bind(productImagesController)
+    )
+
+    expressServer.addHandler(
+        EMethod.GET,
+        '/product_images:id',
+        productImagesController.getProductImage.bind(productImagesController)
+    )
+
+    
+    expressServer.addHandler(
+        EMethod.GET,
+        '/product_properties',
+        productPropertiesController.getProperties.bind(productPropertiesController)
+    )
+
+    expressServer.addHandler(
+        EMethod.GET,
+        '/product_properties:id',
+        productPropertiesController.getProperty.bind(productPropertiesController)
+    )
+
+    
+    expressServer.addHandler(
+        EMethod.GET,
+        '/products',
+        productsController.getProducts.bind(productsController)
+    )
+
+    expressServer.addHandler(
+        EMethod.GET,
+        '/products:id',
+        productsController.getProduct.bind(productsController)
+    )
+
+    
+    expressServer.addHandler(
+        EMethod.GET,
+        '/properties',
+        propertiesController.getProperties.bind(propertiesController)
+    )
+
+    expressServer.addHandler(
+        EMethod.GET,
+        '/properties:id',
+        propertiesController.getProperty.bind(propertiesController)
+    )
+}

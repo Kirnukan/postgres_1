@@ -14,9 +14,9 @@ export class ProductImagesService {
 
    async findOne(id: number): Promise<ProductsImagesEntity> {
       const result = await this.attachmentsRepository.findOne(id);
-      if (!result) {
-         throw 'Have not result'
+      if (result) {
+         return result;
       }
-      return result;
+      throw 'Have not result';
    }
 }

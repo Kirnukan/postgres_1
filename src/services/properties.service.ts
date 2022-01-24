@@ -14,9 +14,9 @@ export class PropertiesService {
 
    async findOne(id: number): Promise<PropertiesEntity> {
       const result = await this.propertiesRepository.findOne(id);
-      if (!result) {
-         throw 'Have not result'
+      if (result) {
+         return result;
       }
-      return result;
+      throw 'Have not result';
    }
 }

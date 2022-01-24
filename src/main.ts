@@ -1,17 +1,14 @@
-import { Server } from 'http';
-import 'reflect-metadata';
 import { createConnection } from 'typeorm';
 import { getOrmConfig } from './config/typeorm';
+import { router } from './routes/routes';
 import { ExpressServer } from './server';
-import { configService } from './services/config.service';
 
 async function main() {
     const expressServer = new ExpressServer();
-    
+    await expressServer.start();
     const ormConnection = await createConnection(getOrmConfig());
     await ormConnection.runMigrations();
-
-    await expressServer.start();
+    router(expressServer) ;
 }
 
 
