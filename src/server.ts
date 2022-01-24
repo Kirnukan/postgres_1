@@ -21,7 +21,7 @@ export class ExpressServer implements ListenerInterface {
     }
     
     constructor () {
-        this.port = configService.port;
+        this.port = 3000;
         this.app = express();
         this.app.use(express.static('../static'));
         this.app.use(express.urlencoded({ extended: true }));
