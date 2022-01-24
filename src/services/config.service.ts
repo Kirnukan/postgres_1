@@ -1,4 +1,4 @@
-import { env } from 'process';
+import { env } from "process";
 
 export class ConfigService {
     get dbHost() {
@@ -22,7 +22,7 @@ export class ConfigService {
     }
 
     get port() {
-        return +ConfigService.getRequiredEnv('port');
+        return +ConfigService.getRequiredEnv('APP_PORT');
     }
 
     private static getRequiredEnv(name: string): string {

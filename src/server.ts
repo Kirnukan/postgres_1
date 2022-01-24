@@ -3,16 +3,16 @@ import http from 'http'
 import { configService } from './services/config.service';
 import express from 'express'
 import cors from 'cors'
-import { swaggerSpec } from './swagger';
+import { Swagger } from './swagger';
 import swaggerUI from 'swagger-ui-express'
 import { Connection } from 'typeorm';
+import { SwaggerDefinition } from 'swagger-jsdoc';
 
 export class ExpressServer implements ListenerInterface {
     private port: number;
     private httpServer: http.Server | null = null;
     private app: express.Application;
     connection: Connection | null = null;
-
     private serverExistence () {
         if (this.httpServer) {
             return this.httpServer;
@@ -27,7 +27,7 @@ export class ExpressServer implements ListenerInterface {
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(express.json());
         this.app.use(cors());
-        this.app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
+        this.app.use('/docs', swaggerUI.serve, swaggerUI.setup(Swagger()))
     }
     start(): Promise<void> {
         return new Promise((resolve) => {

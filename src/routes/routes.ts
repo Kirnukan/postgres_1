@@ -15,18 +15,18 @@ import { ProductImagesController } from '../controllers/productImages.controller
 import { ProductPropertiesController } from '../controllers/productProperties.controller';
 import { PropertiesController } from '../controllers/property.controller';
 
-import { AttachmentsService } from 'src/services/attachments.service';
-import { BrandsService } from 'src/services/brands.service';
-import { CartsService } from 'src/services/carts.service';
-import { CategoriesService } from 'src/services/categories.service';
-import { CurrenciesService } from 'src/services/currencies.service';
-import { CustomersService } from 'src/services/customers.service';
-import { OrdersService } from 'src/services/orders.service';
-import { PaymentsService } from 'src/services/payments.service';
-import { ProductImagesService } from 'src/services/productImages.service';
-import { ProductPropertiesService } from 'src/services/productProperties.service';
-import { ProductsService } from 'src/services/products.service';
-import { PropertiesService } from 'src/services/properties.service';
+import { AttachmentsService } from '../services/attachments.service';
+import { BrandsService } from '../services/brands.service';
+import { CartsService } from '../services/carts.service';
+import { CategoriesService } from '../services/categories.service';
+import { CurrenciesService } from '../services/currencies.service';
+import { CustomersService } from '../services/customers.service';
+import { OrdersService } from '../services/orders.service';
+import { PaymentsService } from '../services/payments.service';
+import { ProductImagesService } from '../services/productImages.service';
+import { ProductPropertiesService } from '../services/productProperties.service';
+import { ProductsService } from '../services/products.service';
+import { PropertiesService } from '../services/properties.service';
 
 
 export async function router (expressServer: ExpressServer) {
@@ -80,7 +80,7 @@ export async function router (expressServer: ExpressServer) {
         propertiesController
     } = entityControllers
 
-    
+
     expressServer.addHandler(
         EMethod.GET,
         '/attachments',
