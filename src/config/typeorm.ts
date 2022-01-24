@@ -1,25 +1,24 @@
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
-import { ConfigService } from '../services/config.service';
+import { configService } from '../services/config.service';
 
 export function getOrmConfig(): PostgresConnectionOptions {
-    const config = new ConfigService();
-
     return {
-        type: 'postgres',
-        host: config.dbHost,
-        port: config.dbPort,
-        username: config.dbUser,
-        password: config.dbPassword,
-        database: config.dbName,
-        entities: ['entities/**/*.entity.js'],
-        migrations: ['migrations/**/*.js'],
-        migrationsTableName: 'migrations',
+        type: "postgres",
+        host: configService.dbHost,
+        port: configService.dbPort,
+        username: configService.dbUser,
+        password: configService.dbPassword,
+        database: configService.dbName,
+        entities: ['entities/*.entity{.js,.ts}'],
+        migrations: ['migrations/**/*{.js,.ts}'],
+        migrationsTableName: "migrations",
+        synchronize: false,
         namingStrategy: new SnakeNamingStrategy(),
-        logging: 'all',
+        logging: "all",
         cli: {
-            migrationsDir: '../migrations',
+           migrationsDir: "src/migrations",
         },
-    };
+     };  
 }
 

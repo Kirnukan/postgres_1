@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { createConnection } from 'typeorm';
 import { getOrmConfig } from './config/typeorm';
 import { router } from './routes/routes';
