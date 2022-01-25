@@ -1,7 +1,6 @@
  import { BaseEntity, Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { OrdersEntity } from './orders.entity';
 import { ProductsEntity } from './products.entity';
-import { BaseClass } from './BaseClass';
 import {
   validate,
   validateOrReject,
