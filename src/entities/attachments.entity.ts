@@ -29,7 +29,5 @@ export class AttachmentsEntity extends BaseEntity{
     type: 'varchar',
     nullable: false
   })  
-  file_path!: string;
-
-  entityName: string = 'attachments';
+  filePath!: string;
 }

@@ -1,5 +1,4 @@
- import { Column, Entity, OneToOne, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
-import { ProductsEntity } from './products.entity';
+ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
 import {
   validate,
   validateOrReject,
@@ -33,14 +32,11 @@ export class CategoriesEntity extends BaseEntity   {
   })  
   rank!: number;
 
-  @OneToOne(() => ProductsEntity)
-
+  @ManyToOne(() => CategoriesEntity)
   @IsInt()
   @Column({
     type: 'numeric',
     nullable: true
   })  
-  parent_category_id?: number;
-
-  entityName: string = 'categories';
+  parentCategoryId!: number;
 }

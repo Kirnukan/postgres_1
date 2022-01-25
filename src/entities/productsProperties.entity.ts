@@ -1,4 +1,4 @@
- import { BaseEntity, Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+ import { BaseEntity, Column, Entity, OneToOne, PrimaryGeneratedColumn, JoinColumn} from 'typeorm';
 import { ProductsEntity } from './products.entity';
 import { PropertiesEntity } from './properties.entity';
 import {
@@ -21,20 +21,22 @@ export class ProductsPropertiesEntity extends BaseEntity   {
   id!: number;
 
   @OneToOne(() => ProductsEntity)
+  @JoinColumn()
   @IsInt()
   @Column({
     type: 'numeric',
     nullable: false
   })    
-  product_id!: number;
-  @OneToOne(() => PropertiesEntity)
+  productId!: number;
 
+  @OneToOne(() => PropertiesEntity)
+  @JoinColumn()
   @IsInt()
   @Column({
     type: 'numeric',
     nullable: false
   })  
-  property_id!: number;
+  propertyId!: number;
 
   @IsInt()
   @Column({
@@ -42,6 +44,4 @@ export class ProductsPropertiesEntity extends BaseEntity   {
     nullable: false
   })  
   value!: number;
-
-  entityName: string = 'products_properties';
 }

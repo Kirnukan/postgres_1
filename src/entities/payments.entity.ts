@@ -1,4 +1,4 @@
- import { Column, Entity, OneToOne, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
+ import { Column, Entity, OneToOne, PrimaryGeneratedColumn, BaseEntity, JoinColumn } from 'typeorm';
 import { OrdersEntity } from './orders.entity';
 import {
   validate,
@@ -20,6 +20,7 @@ export class PaymentsEntity extends BaseEntity   {
   id!: number;
 
   @OneToOne(() => OrdersEntity)
+  @JoinColumn()
   @IsInt()
   @Column({
     type: 'numeric',
@@ -33,6 +34,4 @@ export class PaymentsEntity extends BaseEntity   {
     nullable: false
   })  
   kind!: string;
-
-  entityName: string = 'payments';
 }

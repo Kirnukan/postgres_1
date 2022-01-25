@@ -1,4 +1,4 @@
- import { Column, Entity, OneToOne, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
+ import { Column, Entity, OneToOne, PrimaryGeneratedColumn, BaseEntity, JoinColumn } from 'typeorm';
 import { CustomersEntity } from './customers.entity';
 import {
   validate,
@@ -28,12 +28,13 @@ export class OrdersEntity extends BaseEntity   {
   id!: number;
 
   @OneToOne(() => CustomersEntity)
+  @JoinColumn()
   @IsInt()
   @Column({
     type: 'numeric',
     nullable: false
   })  
-  customer_id!: number;
+  customerId!: number;
   
   @Column({
     type: 'enum',
@@ -47,14 +48,12 @@ export class OrdersEntity extends BaseEntity   {
     type: 'timestamp',
     nullable: false
   })  
-  created_at!: string;
+  createdAt!: string;
   
   @IsDate()
   @Column({
     type: 'timestamp',
     nullable: false
   })  
-  updated_at!: string;
-
-  entityName: string = 'orders';
+  updatedAt!: string;
 }

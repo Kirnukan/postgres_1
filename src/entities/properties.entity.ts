@@ -39,6 +39,4 @@ export class PropertiesEntity extends BaseEntity   {
     nullable: false
   })  
   type!: propType;
-
-  entityName: string = 'properties';
 }

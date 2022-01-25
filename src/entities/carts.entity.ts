@@ -1,4 +1,4 @@
- import { BaseEntity, Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+ import { BaseEntity, Column, Entity, OneToOne, PrimaryGeneratedColumn, JoinColumn, ManyToMany, JoinTable } from 'typeorm';
 import { OrdersEntity } from './orders.entity';
 import { ProductsEntity } from './products.entity';
 import {
@@ -20,21 +20,32 @@ export class CartsEntity extends BaseEntity   {
   id!: number;
 
   @OneToOne(() => OrdersEntity)
+  @JoinColumn()
   @IsInt()
   @Column({
     type: 'numeric',
     nullable: false
   })  
-  order_id!: number;
+  orderId!: number;
   
-  @OneToOne(() => ProductsEntity)
-
+  @ManyToMany(() => ProductsEntity)
+  @JoinTable({
+    name: 'carts_to_products',
+    joinColumn: {
+      name: 'carts_id',
+      referencedColumnName: 'id'
+    },
+    inverseJoinColumn: {
+      name: 'products_id',
+      referencedColumnName: 'id'
+    }
+  })
   @IsInt()
   @Column({
     type: 'numeric',
     nullable: false
   })  
-  product_id!: number;
+  productId!: number;
   
   @IsInt()
   @Column({
@@ -43,6 +54,4 @@ export class CartsEntity extends BaseEntity   {
     default: 0
   })  
   amount!: number | null;
-
-  entityName: string = 'carts';
 }

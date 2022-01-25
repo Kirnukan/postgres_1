@@ -1,4 +1,5 @@
- import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
+ import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn, JoinColumn
+} from 'typeorm';
  import { AttachmentsEntity } from './attachments.entity';
  import {
   validate,
@@ -20,20 +21,22 @@ export class ProductsImagesEntity extends BaseEntity   {
   id!: number;
 
   @ManyToOne(() => AttachmentsEntity)
+  @JoinColumn()
   @IsInt()
   @Column({
     type: 'numeric',
     nullable: false
   })  
-  original_attachment_id!: number;
+  originalAttachmentId!: number;
   
   @ManyToOne(() => AttachmentsEntity)
+  @JoinColumn()
   @IsInt()
   @Column({
     type: 'numeric',
     nullable: false
   })  
-  small_attachment_id!: number;
+  smallAttachmentId!: number;
   
   @IsInt()
   @Column({
@@ -41,6 +44,4 @@ export class ProductsImagesEntity extends BaseEntity   {
     nullable: false
   })  
   range!: number;
-
-  entityName: string = 'products_images';
 }

@@ -40,14 +40,12 @@ export class CustomersEntity extends BaseEntity  {
     type: 'varchar',
     nullable: false
   })  
-  first_name!: string;
+  firstName!: string;
   
   @Length(1, 64)
   @Column({
     type: 'varchar',
     nullable: false
   })  
-  last_name!: string;
-
-  entityName: string = 'customers';
+  lastName!: string;
 }

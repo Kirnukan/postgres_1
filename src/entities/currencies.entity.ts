@@ -20,12 +20,9 @@ export class CurrenciesEntity extends BaseEntity   {
   id!: number;
 
   @Length(1, 10)
-  @IsCurrency()
   @Column({
     type: 'varchar',
     nullable: false
   })  
   symbol!: string;
-
-  entityName: string = 'currencies';
 }

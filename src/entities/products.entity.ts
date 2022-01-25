@@ -1,4 +1,4 @@
- import { Column, Entity, OneToOne, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
+ import { Column, Entity, JoinTable, ManyToOne, JoinColumn, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
 import { BrandsEntity } from './brands.entity';
 import { CategoriesEntity } from './categories.entity';
 import { CurrenciesEntity } from './currencies.entity';
@@ -57,32 +57,30 @@ export class ProductsEntity extends BaseEntity{
   })
   price!: number;
 
-  @OneToOne(() => CategoriesEntity)
-
+  @ManyToOne(() => CategoriesEntity)
+  @JoinTable()
   @IsInt()
   @Column({
     type: 'numeric',
     nullable: false,
   })
-  category_id!: number;
+  categoryId!: number;
 
-  @OneToOne(() => CurrenciesEntity)
-
+  @ManyToOne(() => CurrenciesEntity)
+  @JoinColumn()
   @IsInt()
   @Column({
     type: 'numeric',
     nullable: false,
   })
-  currency_id!: number;
+  currencyId!: number;
 
-  @OneToOne(() => BrandsEntity)
-
+  @ManyToOne(() => BrandsEntity)
+  @JoinColumn()
   @IsInt()
   @Column({
     type: 'numeric',
     nullable: true,
   })
-  brand_id?: number;
-
-  entityName: string = 'products';
+  brandId?: number;
 }

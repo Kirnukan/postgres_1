@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, OneToOne, PrimaryGeneratedColumn, JoinColumn } from 'typeorm';
 import { AttachmentsEntity } from './attachments.entity';
 import {
   validate,
@@ -26,13 +26,11 @@ export class BrandsEntity extends BaseEntity   {
   caption!: string;
   
   @OneToOne(() => AttachmentsEntity)
-
   @IsInt()
+  @JoinColumn()
   @Column({
     type: 'numeric',
     nullable: false
   })  
-  logo_attachment_id!: number;
-
-  entityName: string = 'brands';
+  logoAttachment_id!: number;
 }
