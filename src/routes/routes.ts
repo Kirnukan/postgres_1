@@ -29,6 +29,8 @@ import { ProductPropertiesService } from '../services/productProperties.service'
 import { ProductsService } from '../services/products.service';
 import { PropertiesService } from '../services/properties.service';
 import { UsersService } from '../services/users.service';
+import { AuthenticationController } from 'src/controllers/authentication.controller';
+import { AuthenticationService } from 'src/services/authentication.service';
 
 export async function router (expressServer: ExpressServer) {
     if(!expressServer.connection) {
@@ -49,7 +51,7 @@ export async function router (expressServer: ExpressServer) {
         productPropertiesService: new ProductPropertiesService(connection),
         productsService: new ProductsService(connection),
         propertiesService: new PropertiesService(connection),
-        usersService: new UsersService(connection)
+        authenticationService: new AuthenticationService(connection)
     };
 
     const entityControllers = {
@@ -65,7 +67,7 @@ export async function router (expressServer: ExpressServer) {
         productPropertiesController: new ProductPropertiesController(entityServices.productPropertiesService),
         productsController: new ProductsController(entityServices.productsService),
         propertiesController: new PropertiesController(entityServices.propertiesService),
-        usersController: new UsersController(entityServices.usersService)
+        authenticationController: new AuthenticationController(entityServices.authenticationService)
     };
 
     const {
@@ -81,7 +83,7 @@ export async function router (expressServer: ExpressServer) {
         productPropertiesController,
         productsController,
         propertiesController,
-        usersController
+        authenticationController
     } = entityControllers
 
 /**
@@ -676,53 +678,9 @@ export async function router (expressServer: ExpressServer) {
     )
 
 
-
-/**
-* @swagger
-* /users:
-*  get:
-*      summary: Returns an array of users
-*      responses:
-*          200:
-*              description: Array of users
-*              content: 
-*                  application/json:
-*                      schema:
-*                          type: array
-*                          items:
-*                              $ref: '#/components/schemas/user'
-*/
-
-/**
-* @swagger
-* /users/{id}:
-*  get:
-*      summary: Returns a user with provided id
-*      parameters:
-*          - in: path
-*            name: id
-*            required: true
-*            description: User's id
-*            schema:
-*                type: integer
-*      responses:
-*          200:
-*              description: User
-*              content: 
-*                  application/json:
-*                      schema:
-*                          $ref: '#/components/schemas/user'
-*/
-    
     expressServer.addHandler(
-        EMethod.GET,
-        '/users',
-        usersController.getUsers.bind(usersController)
-    )
-
-    expressServer.addHandler(
-        EMethod.GET,
-        '/users:id',
-        usersController.getUser.bind(usersController)
+        EMethod.POST,
+        '/jwt/login',
+        authenticationController.authorization.bind(authenticationController)
     )
 }

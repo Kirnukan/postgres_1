@@ -24,6 +24,10 @@ export class ConfigService {
     get port() {
         return +ConfigService.getRequiredEnv('APP_PORT');
     }
+    
+    get secretKey() {
+        return ConfigService.getRequiredEnv('SECRET_KEY');
+    }
 
     private static getRequiredEnv(name: string): string {
         const envName = env[name];

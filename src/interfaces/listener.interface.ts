@@ -1,6 +1,7 @@
 import { RequestInterface } from './request.interface';
+import express from 'express'
 
-export type THandler = (req: RequestInterface) => unknown;
+export type THandler = (req: RequestInterface, res: express.Response) => unknown;
 export enum EMethod {
   GET='GET',
   POST='POST',
