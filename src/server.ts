@@ -50,22 +50,18 @@ export class ExpressServer implements ListenerInterface {
                this.app.get(route, async (req, res) => {
                   res.send(await handler(req));
                });
-               return;
             case 'POST':
                this.app.post(route, async (req, res) => {
                   res.send(await handler(req));
                });
-               return;
             case 'PUT':
                this.app.put(route, async (req, res) => {
                   res.send(await handler(req));
                });
-               return;
             case 'DELETE':
                this.app.delete(route, async (req, res) => {
                   res.send(await handler(req));
                });
-               return;
          }
     }
 }

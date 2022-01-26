@@ -17,7 +17,7 @@ export function Swagger() {
 
   const options = {
       swaggerDefinition,
-      apis: ['./services/initEndpoints.service.js', './entities/*.js'],
+      apis: ['./**/routes{.js,.ts}'],
   };
 
   const swaggerSpec = swaggerJSDoc(options);

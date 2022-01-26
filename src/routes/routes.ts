@@ -80,6 +80,42 @@ export async function router (expressServer: ExpressServer) {
         propertiesController
     } = entityControllers
 
+/**
+* @swagger
+* /attachments:
+*  get:
+*      summary: Returns an array of attachments
+*      responses:
+*          200:
+*              description: Array of attachments
+*              content: 
+*                  application/json:
+*                      schema:
+*                          type: array
+*                          items:
+*                              $ref: '#/components/schemas/attachment'
+*/
+
+/**
+* @swagger
+* /attachments/{id}:
+*  get:
+*      summary: Returns a attachment with provided id
+*      parameters:
+*          - in: path
+*            name: id
+*            required: true
+*            description: Attachment's id
+*            schema:
+*                type: integer
+*      responses:
+*          200:
+*              description: Attachment
+*              content: 
+*                  application/json:
+*                      schema:
+*                          $ref: '#/components/schemas/attachment'
+*/
 
     expressServer.addHandler(
         EMethod.GET,
@@ -87,13 +123,50 @@ export async function router (expressServer: ExpressServer) {
         attachmentsController.getAttachments.bind(attachmentsController)
     )
 
+
     expressServer.addHandler(
         EMethod.GET,
         '/attachments:id',
         attachmentsController.getAttachment.bind(attachmentsController)
     )
 
-    
+/**
+ * @swagger
+ * /brands/{id}:
+ *  get:
+ *      summary: Returns a brand with provided id
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            description: Brand's id
+ *            schema:
+ *                type: integer
+ *      responses:
+ *          200:
+ *              description: Brand
+ *              content: 
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/brand'
+ */
+
+/**
+ * @swagger
+ * /brands:
+ *  get:
+ *      summary: Returns an array of brands
+ *      responses:
+ *          200:
+ *              description: Array of brands
+ *              content: 
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/brand'
+ */    
+
     expressServer.addHandler(
         EMethod.GET,
         '/brands',
@@ -106,7 +179,44 @@ export async function router (expressServer: ExpressServer) {
         brandsController.getBrand.bind(brandsController)
     )
 
-    
+/**
+ * @swagger
+ * /carts:
+ *  get:
+ *      summary: Returns an array of carts
+ *      responses:
+ *          200:
+ *              description: Array of carts
+ *              content: 
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/cart'
+ */
+
+/**
+ * @swagger
+ * /carts/{id}:
+ *  get:
+ *      summary: Returns a cart with provided id
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            description: Cart's id
+ *            schema:
+ *                type: integer
+ *      responses:
+ *          200:
+ *              description: Cart
+ *              content: 
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/cart'
+ */
+
+
     expressServer.addHandler(
         EMethod.GET,
         '/carts',
@@ -119,7 +229,43 @@ export async function router (expressServer: ExpressServer) {
         cartsController.getCart.bind(cartsController)
     )
 
-    
+/**
+* @swagger
+* /categories:
+*  get:
+*      summary: Returns an array of categories
+*      responses:
+*          200:
+*              description: Array of categories
+*              content: 
+*                  application/json:
+*                      schema:
+*                          type: array
+*                          items:
+*                              $ref: '#/components/schemas/category'
+*/
+
+/**
+* @swagger
+* /categories/{id}:
+*  get:
+*      summary: Returns a category with provided id
+*      parameters:
+*          - in: path
+*            name: id
+*            required: true
+*            description: Category's id
+*            schema:
+*                type: integer
+*      responses:
+*          200:
+*              description: Category
+*              content: 
+*                  application/json:
+*                      schema:
+*                          $ref: '#/components/schemas/category'
+*/
+
     expressServer.addHandler(
         EMethod.GET,
         '/categories',
@@ -132,7 +278,43 @@ export async function router (expressServer: ExpressServer) {
         categoriesController.getCategory.bind(categoriesController)
     )
 
-    
+/**
+* @swagger
+* /currencies:
+*  get:
+*      summary: Returns an array of currencies
+*      responses:
+*          200:
+*              description: Array of currencies
+*              content: 
+*                  application/json:
+*                      schema:
+*                          type: array
+*                          items:
+*                              $ref: '#/components/schemas/currency'
+*/
+
+/**
+* @swagger
+* /currencies/{id}:
+*  get:
+*      summary: Returns a currency with provided id
+*      parameters:
+*          - in: path
+*            name: id
+*            required: true
+*            description: Currency's id
+*            schema:
+*                type: integer
+*      responses:
+*          200:
+*              description: Currency
+*              content: 
+*                  application/json:
+*                      schema:
+*                          $ref: '#/components/schemas/currency'
+*/
+
     expressServer.addHandler(
         EMethod.GET,
         '/currencies',
@@ -145,6 +327,42 @@ export async function router (expressServer: ExpressServer) {
         currenciesController.getCurrency.bind(currenciesController)
     )
 
+/**
+* @swagger
+* /customers:
+*  get:
+*      summary: Returns an array of customers
+*      responses:
+*          200:
+*              description: Array of customers
+*              content: 
+*                  application/json:
+*                      schema:
+*                          type: array
+*                          items:
+*                              $ref: '#/components/schemas/customer'
+*/
+
+/**
+* @swagger
+* /customers/{id}:
+*  get:
+*      summary: Returns a customer with provided id
+*      parameters:
+*          - in: path
+*            name: id
+*            required: true
+*            description: Customer's id
+*            schema:
+*                type: integer
+*      responses:
+*          200:
+*              description: Customer
+*              content: 
+*                  application/json:
+*                      schema:
+*                          $ref: '#/components/schemas/customer'
+*/
     
     expressServer.addHandler(
         EMethod.GET,
@@ -157,7 +375,43 @@ export async function router (expressServer: ExpressServer) {
         '/customers:id',
         customersController.getCustomer.bind(customersController)
     )
+    
+/**
+* @swagger
+* /orders:
+*  get:
+*      summary: Returns an array of orders
+*      responses:
+*          200:
+*              description: Array of orders
+*              content: 
+*                  application/json:
+*                      schema:
+*                          type: array
+*                          items:
+*                              $ref: '#/components/schemas/order'
+*/
 
+/**
+* @swagger
+* /orders/{id}:
+*  get:
+*      summary: Returns a order with provided id
+*      parameters:
+*          - in: path
+*            name: id
+*            required: true
+*            description: Order's id
+*            schema:
+*                type: integer
+*      responses:
+*          200:
+*              description: Order
+*              content: 
+*                  application/json:
+*                      schema:
+*                          $ref: '#/components/schemas/order'
+*/
     
     expressServer.addHandler(
         EMethod.GET,
@@ -171,7 +425,43 @@ export async function router (expressServer: ExpressServer) {
         ordersController.getOrder.bind(ordersController)
     )
 
-    
+/**
+* @swagger
+* /payments:
+*  get:
+*      summary: Returns an array of payments
+*      responses:
+*          200:
+*              description: Array of payments
+*              content: 
+*                  application/json:
+*                      schema:
+*                          type: array
+*                          items:
+*                              $ref: '#/components/schemas/payment'
+*/
+
+/**
+* @swagger
+* /payments/{id}:
+*  get:
+*      summary: Returns a payment with provided id
+*      parameters:
+*          - in: path
+*            name: id
+*            required: true
+*            description: Payment's id
+*            schema:
+*                type: integer
+*      responses:
+*          200:
+*              description: Payment
+*              content: 
+*                  application/json:
+*                      schema:
+*                          $ref: '#/components/schemas/payment'
+*/
+
     expressServer.addHandler(
         EMethod.GET,
         '/payments',
@@ -184,7 +474,43 @@ export async function router (expressServer: ExpressServer) {
         paymentsController.getPayment.bind(paymentsController)
     )
 
-    
+/**
+* @swagger
+* /productsImages:
+*  get:
+*      summary: Returns an array of products images
+*      responses:
+*          200:
+*              description: Array of products images
+*              content: 
+*                  application/json:
+*                      schema:
+*                          type: array
+*                          items:
+*                              $ref: '#/components/schemas/product_image'
+*/
+
+/**
+* @swagger
+* /productsImages/{id}:
+*  get:
+*      summary: Returns a product image with provided id
+*      parameters:
+*          - in: path
+*            name: id
+*            required: true
+*            description: Product image's id
+*            schema:
+*                type: integer
+*      responses:
+*          200:
+*              description: Product image
+*              content: 
+*                  application/json:
+*                      schema:
+*                          $ref: '#/components/schemas/product_image'
+*/
+
     expressServer.addHandler(
         EMethod.GET,
         '/product_images',
@@ -197,7 +523,43 @@ export async function router (expressServer: ExpressServer) {
         productImagesController.getProductImage.bind(productImagesController)
     )
 
-    
+/**
+* @swagger
+* /productProperties:
+*  get:
+*      summary: Returns an array of product properties
+*      responses:
+*          200:
+*              description: Array of product properties
+*              content: 
+*                  application/json:
+*                      schema:
+*                          type: array
+*                          items:
+*                              $ref: '#/components/schemas/product_property'
+*/
+
+/**
+* @swagger
+* /productProperties/{id}:
+*  get:
+*      summary: Returns a product property with provided id
+*      parameters:
+*          - in: path
+*            name: id
+*            required: true
+*            description: Product property's id
+*            schema:
+*                type: integer
+*      responses:
+*          200:
+*              description: Product property
+*              content: 
+*                  application/json:
+*                      schema:
+*                          $ref: '#/components/schemas/product_property'
+*/
+
     expressServer.addHandler(
         EMethod.GET,
         '/product_properties',
@@ -210,7 +572,43 @@ export async function router (expressServer: ExpressServer) {
         productPropertiesController.getProperty.bind(productPropertiesController)
     )
 
-    
+/**
+ * @swagger
+ * /products:
+ *  get:
+ *      summary: Returns an array of products
+ *      responses:
+ *          200:
+ *              description: Array of products
+ *              content: 
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/product'
+ */
+
+/**
+ * @swagger
+ * /products/{id}:
+ *  get:
+ *      summary: Returns a product with provided id
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            description: Product's id
+ *            schema:
+ *                type: integer
+ *      responses:
+ *          200:
+ *              description: Product
+ *              content: 
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/product'
+ */
+
     expressServer.addHandler(
         EMethod.GET,
         '/products',
@@ -223,6 +621,43 @@ export async function router (expressServer: ExpressServer) {
         productsController.getProduct.bind(productsController)
     )
 
+
+/**
+* @swagger
+* /properties:
+*  get:
+*      summary: Returns an array of properties
+*      responses:
+*          200:
+*              description: Array of properties
+*              content: 
+*                  application/json:
+*                      schema:
+*                          type: array
+*                          items:
+*                              $ref: '#/components/schemas/property'
+*/
+
+/**
+* @swagger
+* /properties/{id}:
+*  get:
+*      summary: Returns a property with provided id
+*      parameters:
+*          - in: path
+*            name: id
+*            required: true
+*            description: Property's id
+*            schema:
+*                type: integer
+*      responses:
+*          200:
+*              description: Property
+*              content: 
+*                  application/json:
+*                      schema:
+*                          $ref: '#/components/schemas/property'
+*/
     
     expressServer.addHandler(
         EMethod.GET,

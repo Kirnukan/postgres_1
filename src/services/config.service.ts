@@ -1,12 +1,12 @@
 import { env } from "process";
 
 export class ConfigService {
-    get dbHost() {
-        return ConfigService.getRequiredEnv('DB_HOST');
-    }
-
     get dbName() {
         return ConfigService.getRequiredEnv('DB_NAME');
+    }
+
+    get dbHost() {
+        return ConfigService.getRequiredEnv('DB_HOST');
     }
 
     get dbPort() {
