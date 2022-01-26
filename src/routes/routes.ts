@@ -14,6 +14,7 @@ import { ProductsController } from '../controllers/product.controller';
 import { ProductImagesController } from '../controllers/productImages.controller';
 import { ProductPropertiesController } from '../controllers/productProperties.controller';
 import { PropertiesController } from '../controllers/property.controller';
+import { UsersController } from '../controllers/user.controller';
 
 import { AttachmentsService } from '../services/attachments.service';
 import { BrandsService } from '../services/brands.service';
@@ -27,7 +28,7 @@ import { ProductImagesService } from '../services/productImages.service';
 import { ProductPropertiesService } from '../services/productProperties.service';
 import { ProductsService } from '../services/products.service';
 import { PropertiesService } from '../services/properties.service';
-
+import { UsersService } from '../services/users.service';
 
 export async function router (expressServer: ExpressServer) {
     if(!expressServer.connection) {
@@ -47,7 +48,8 @@ export async function router (expressServer: ExpressServer) {
         productImagesService: new ProductImagesService(connection),
         productPropertiesService: new ProductPropertiesService(connection),
         productsService: new ProductsService(connection),
-        propertiesService: new PropertiesService(connection)
+        propertiesService: new PropertiesService(connection),
+        usersService: new UsersService(connection)
     };
 
     const entityControllers = {
@@ -62,7 +64,8 @@ export async function router (expressServer: ExpressServer) {
         productImagesController: new ProductImagesController(entityServices.productImagesService),
         productPropertiesController: new ProductPropertiesController(entityServices.productPropertiesService),
         productsController: new ProductsController(entityServices.productsService),
-        propertiesController: new PropertiesController(entityServices.propertiesService)
+        propertiesController: new PropertiesController(entityServices.propertiesService),
+        usersController: new UsersController(entityServices.usersService)
     };
 
     const {
@@ -77,7 +80,8 @@ export async function router (expressServer: ExpressServer) {
         productImagesController,
         productPropertiesController,
         productsController,
-        propertiesController
+        propertiesController,
+        usersController
     } = entityControllers
 
 /**
@@ -669,5 +673,56 @@ export async function router (expressServer: ExpressServer) {
         EMethod.GET,
         '/properties:id',
         propertiesController.getProperty.bind(propertiesController)
+    )
+
+
+
+/**
+* @swagger
+* /users:
+*  get:
+*      summary: Returns an array of users
+*      responses:
+*          200:
+*              description: Array of users
+*              content: 
+*                  application/json:
+*                      schema:
+*                          type: array
+*                          items:
+*                              $ref: '#/components/schemas/user'
+*/
+
+/**
+* @swagger
+* /users/{id}:
+*  get:
+*      summary: Returns a user with provided id
+*      parameters:
+*          - in: path
+*            name: id
+*            required: true
+*            description: User's id
+*            schema:
+*                type: integer
+*      responses:
+*          200:
+*              description: User
+*              content: 
+*                  application/json:
+*                      schema:
+*                          $ref: '#/components/schemas/user'
+*/
+    
+    expressServer.addHandler(
+        EMethod.GET,
+        '/users',
+        usersController.getUsers.bind(usersController)
+    )
+
+    expressServer.addHandler(
+        EMethod.GET,
+        '/users:id',
+        usersController.getUser.bind(usersController)
     )
 }

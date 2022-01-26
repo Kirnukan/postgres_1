@@ -1,21 +1,20 @@
- import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
- import {
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
   validate,
   validateOrReject,
   Contains,
   IsInt,
   Length,
   IsEmail,
+  IsPhoneNumber,
   IsFQDN,
   IsDate,
   Min,
   Max,
-  IsPhoneNumber,
 } from 'class-validator';
 
-
-@Entity('customers')
-export class CustomersEntity extends BaseEntity  {
+@Entity('users')
+export class UsersEntity extends BaseEntity   {
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -50,4 +49,10 @@ export class CustomersEntity extends BaseEntity  {
     nullable: false
   })  
   lastName!: string;
+   @Length(1, 256)
+   @Column({
+      type: 'varchar',
+   })
+   password: string;
+
 }
